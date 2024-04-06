@@ -3,6 +3,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const axios = require('axios');
 
 exports.test = async (req , res) => {
   return res.status(200).json({ message: 'This is url is working ' });
@@ -21,6 +22,50 @@ function generateInvitationCode(length) {
 }
 
 // console.log(generateInvitationCode(6));
+
+exports.send_otp = async (req, res) => {
+  try {
+    const mobileNumber = req.body.mobileNumber;
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    const response = await axios.get('https://www.fast2sms.com/dev/bulk', {
+      params: {
+        authorization: process.env.FAST2SMS_API_KEY,
+        variables_values: `Your OTP is ${otp}`,
+        route: 'otp',
+        numbers: mobileNumber
+      }
+    });
+    res.json({ success: true, message: 'OTP sent successfully!' });
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+    res.status(500).json({ success: false, message: 'Failed to send OTP.' });
+  }
+}
+
+// Assuming you have an array or database to store the generated OTPs for each user
+const otpStore = {};
+
+exports.verify_otp = async (req, res) => {
+  const { mobileNumber, otp } = req.body;
+
+  // Check if the mobile number exists in the OTP store
+  if (otpStore.hasOwnProperty(mobileNumber)) {
+    // Get the stored OTP and its expiration time
+    const { storedOTP, expirationTime } = otpStore[mobileNumber];
+
+    // Verify the OTP and check if it's not expired
+    if (storedOTP === otp && Date.now() < expirationTime) {
+      // OTP verification successful
+      res.json({ success: true, message: 'OTP verification successful!' });
+    } else {
+      // Invalid OTP or expired OTP
+      res.status(400).json({ success: false, message: 'Invalid OTP.' });
+    }
+  } else {
+    // Mobile number not found or OTP expired
+    res.status(400).json({ success: false, message: 'Mobile number not found or OTP expired.' });
+  }
+}
 
 // Registration controller
 exports.register = async (req, res) => {
