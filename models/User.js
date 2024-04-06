@@ -5,6 +5,7 @@ const sequelize = require('../config/database');
 const Blog = require('./Product_title');
 
 const User = sequelize.define('User', {
+
   mobile_number: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -26,6 +27,10 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  active: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false
+  }
 });
 
 User.hasMany(Blog, { foreignKey: 'userId' });

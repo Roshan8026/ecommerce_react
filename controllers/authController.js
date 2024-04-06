@@ -8,23 +8,36 @@ exports.test = async (req , res) => {
   return res.status(200).json({ message: 'This is url is working ' });
 
 }
+function generateInvitationCode(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+// console.log(generateInvitationCode(6));
 
 // Registration controller
 exports.register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { mobile_number, password } = req.body;
 
     // Check if the user with the given email already exists
-    const existingUser = await User.findOne({ where: { email } });
+    const existingUser = await User.findOne({ where: { mobile_number } });
     if (existingUser) {
-      return res.status(400).json({ error: 'Email already exists' });
+      return res.status(400).json({ error: 'Mobile Number already exists' });
     }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the user
-    const user = await User.create({ name, email, password: hashedPassword });
+    const user = await User.create({ mobile_number:mobile_number, password: hashedPassword, role: 'client', invitation_code: generateInvitationCode(6) });
 
     // Generate a JWT token
     const token = jwt.sign({ userId: user.id }, 'secret-key', { expiresIn: '1h' });
@@ -39,10 +52,10 @@ exports.register = async (req, res) => {
 // Login controller
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { mobile_number, password } = req.body;
 
     // Check if the user exists
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { mobile_number } });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
