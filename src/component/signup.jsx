@@ -1,8 +1,42 @@
-import React from 'react';
+import React , { useState, useEffect }from 'react';
 import { Navbar, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import './SignupPage.css'; // Import your CSS file
+import { NavLink } from 'react-router-dom'; // Import NavLink from react-router-dom
 
 const SignupPage = () => {
+
+    // State to manage the countdown timer
+    const [countdown, setCountdown] = useState(0);
+    // Text for the send button
+    const [sendButtonText, setSendButtonText] = useState('Send');
+
+      useEffect(() => {
+        let intervalId;
+
+        if (countdown > 0) {
+            console.log('countdown',countdown);
+            // Set the button text to the countdown number
+            setSendButtonText(`${countdown}`);
+            // Decrease countdown every second
+            intervalId = setInterval(() => {
+                setCountdown((prevCountdown) => prevCountdown - 1);
+            }, 1000);
+        } else {
+            // Reset the button text to "Send" when countdown finishes
+            setSendButtonText('Send');
+        }
+
+        // Cleanup interval on component unmount or countdown end
+        return () => clearInterval(intervalId);
+    }, [countdown]);
+
+    const handleSendClick = () => {
+        // Start the countdown at 60 if it's not already in progress
+        if (countdown === 0) {
+            setCountdown(60);
+        }
+    };
+    
     return (
         <div>
             <Navbar bg="dark" variant="dark" className="fixed-top">
@@ -13,24 +47,31 @@ const SignupPage = () => {
                     <Col xs={12} md={6}>
                         <Card className="signup-card">
                             <Card.Body>
-                                <h2 className="visually-hidden">Sign Up</h2>
+                                <h2 className="visually-hidden"> New Account </h2>
+                                <h2 style={{fontWeight: 'bold'}}> New Account </h2>
+                                <h5 style={{marginBottom: '20px'}}>Sign Up For Free, Now </h5>
                                 <Form>
                                     <Row className="mb-3">
                                         <Col>
-                                            <Form.Control type="text" placeholder="First Name" className="form-control" />
+                                            <Form.Control type="number" placeholder="Please Enter Mobile Number" className="form-control" />
                                         </Col>
-                                        <Col>
+                                        {/* <Col>
                                             <Form.Control type="text" placeholder="Last Name" className="form-control" />
+                                        </Col> */}
+                                    </Row>
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Form.Control type="password" placeholder="Please input Password " className="form-control" />
                                         </Col>
                                     </Row>
                                     <Row className="mb-3">
                                         <Col>
-                                            <Form.Control type="text" placeholder="Mobile Number" className="form-control" />
+                                            <Form.Control type="password" placeholder="Please enter password again" className="form-control" />
                                         </Col>
                                     </Row>
                                     <Row className="mb-3">
                                         <Col>
-                                            <Form.Control type="password" placeholder="Password" className="form-control" />
+                                            <Form.Control type="text" placeholder="Please enter invitation code" className="form-control" />
                                         </Col>
                                     </Row>
                                     <Row className="mb-3">
@@ -38,8 +79,11 @@ const SignupPage = () => {
                                             <Form.Control type="text" placeholder="Verification Code" className="form-control" />
                                         </Col>
                                         <Col xs={4}>
-                                            <Button variant="primary" type="submit" className="btn-send" style={{ height: "100%" }}>
-                                                Send
+                                            <Button variant="primary" type="submit"
+                                            disabled={countdown > 0} // Disable button while countdown is active
+                                            onClick={handleSendClick}
+                                            className="btn-send" style={{ height: "73%" }}>
+                                                 {sendButtonText}
                                             </Button>
                                         </Col>
                                     </Row>
@@ -50,6 +94,8 @@ const SignupPage = () => {
                                             </Button>
                                         </Col>
                                     </Row>
+                                    <p>Already have account ? login now  <NavLink to={"/signIn"} className="nav-link bottom-nav-link" style={{ color: "blue",
+                                TextDecoration: 'underline' }}>Log in</NavLink> </p>
                                 </Form>
                             </Card.Body>
                         </Card>

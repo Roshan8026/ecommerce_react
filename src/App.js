@@ -10,11 +10,13 @@ import Navigation from './component/Navigation.js';
 const App = () => {
   return (
     <Router>
+      <div className="route-container">
       <Navigation />
       <Routes>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/home" element={<HomePage />} />
       </Routes>
+      </div>
     </Router>
   );
 };
