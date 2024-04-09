@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignupPage from './component/signup.jsx';
 import { HomePage } from './component/HomePage.jsx';
 import Navigation from './component/Navigation.js';
+import Login from './component/Login.jsx';
+import ResetPassword from './component/ResetPassword.jsx';
 
 const App = () => {
   return (
@@ -15,6 +17,8 @@ const App = () => {
       <Routes>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
       </Routes>
       </div>
     </Router>
