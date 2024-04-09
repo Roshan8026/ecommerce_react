@@ -83,8 +83,10 @@ const ResetPassword = () => {
                                             </Button>
                                         </Col>
                                     </Row>
-                                    <span><p>Already have account ? login now  <NavLink to={"/login"} className="nav-link bottom-nav-link" style={{ color: "blue",fontWeight: 'bold',
-                                    TextDecoration: 'underline' }}>Log in</NavLink> </p></span>
+                                    <div>
+                                        <p style={{ display: "inline-block" }}>Already have an account ? Login now&nbsp;&nbsp;</p>
+                                        <NavLink to={"/login"} className="nav-link bottom-nav-link" style={{ color: "blue", fontWeight: 'bold', textDecoration: 'underline', display: "inline-block" }}>Log in</NavLink>
+                                    </div>
                                 </Form>
                             </Card.Body>
                         </Card>

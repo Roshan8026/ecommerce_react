@@ -41,7 +41,7 @@ const Login = () => {
                                         </Col>
                                         <Col xs={6}>
                                         <NavLink to={"/reset-password"} className="nav-link bottom-nav-link" style={{ color: "blue", fontWeight: 'bold',
-                                            TextDecoration: 'underline' }}> Forget Password ?</NavLink>
+                                            TextDecoration: 'underline' }}>&nbsp;&nbsp;Forget Password ?</NavLink>
                                         </Col>
                                     </Row>
                                 </Form>
