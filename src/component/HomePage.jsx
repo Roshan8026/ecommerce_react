@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
-
+import './Home.css';
 const spanStyle = {
     padding: '20px',
     background: '#efefef',
@@ -32,6 +32,7 @@ const slideImages = [
 
 export const HomePage = () => {
     return (
+        <>
         <div className="slide-container">
             <Slide>
                 {slideImages.map((slideImage, index) => (
@@ -43,5 +44,28 @@ export const HomePage = () => {
                 ))}
             </Slide>
         </div>
+        <div className='mobile-responsive'>
+            <h3> About Us </h3>
+        <br/>
+        <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. <br/>  Explicabo exercitationem
+        esse quasi, iure ullam repellat <br/>itaque facere! Animi repellat cum quas <br/>Iste 
+        esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas quisquam! Iste  
+        aperiam maxime quaerat est et veniam doloremque!<br/> 
+        </p>
+        <br/>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br/>  Explicabo exercitationem
+        esse quasi, iure ullam repellat <br/>itaque facere! Animi repellat cum quas <br/>Iste 
+        esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas quisquam! Iste  
+        aperiam maxime quaerat est et veniam doloremque!<br/> 
+        </p>
+        <br/>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br/>  Explicabo exercitationem
+        esse quasi, iure ullam repellat <br/>itaque facere! Animi repellat cum quas <br/>Iste 
+        esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas quisquam! Iste  
+        aperiam maxime quaerat est et veniam doloremque!<br/> 
+        </p>
+        <br/>
+        </div>
+           </> 
     )
 }

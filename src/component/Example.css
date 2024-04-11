@@ -18,3 +18,7 @@
 .bottom-tab-label {
     font-size: 12px;
 }
+
+.navbar, .fixed-bottom, .navbar-light, .bottom-tab-nav {
+    background-color: white;
+}

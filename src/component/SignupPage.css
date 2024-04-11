@@ -98,3 +98,19 @@
   width: 102%;
   max-width: 400px;
 }
+
+/* Media Queries for Desktop Screens */
+@media (min-width: 768px) {
+  .signup-card, .login-card, .reset-password-card {
+      width: 60%; /* Adjusting the width for desktop screens */
+      max-width: 500px; /* A slightly larger max-width for desktop */
+      margin: 20px auto; /* Increase margin for desktop to center the card with more space */
+  }
+
+  .form-control, .btn-signup, .btn-send {
+      padding: 15px; /* Slightly larger padding for easier interaction on desktop */
+      margin-bottom: 20px; /* Increase spacing for a less cramped look */
+  }
+
+  /* Additional desktop-specific styles can be added here */
+}
