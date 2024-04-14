@@ -1,0 +1,12 @@
+.user-icon {
+    margin-right: 8px; /* Adjust the gap between the icon and the title */
+  }
+  
+  .accordion-title {
+    flex-grow: 1; /* Allow the title to take up remaining space */
+  }
+  
+  .arrow-icon {
+    margin-left: 8px; /* Adjust the gap between the title and the arrow */
+  }
+  

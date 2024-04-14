@@ -19,7 +19,7 @@ const tabs = [{
     icon: faUsers,
     label: "Team"
 }, {
-    route: "/my",
+    route: "/my-components",
     icon: faUserCircle,
     label: "My"
 }]

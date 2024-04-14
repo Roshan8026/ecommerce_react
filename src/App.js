@@ -9,6 +9,7 @@ import Navigation from './component/Navigation.js';
 import Login from './component/Login.jsx';
 import ResetPassword from './component/ResetPassword.jsx';
 import ProductComponent from './component/ProductComponent.jsx';
+import MyComponent from './component/MyComponent.jsx';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Assuming initial state is not logged in
@@ -21,6 +22,7 @@ const App = () => {
         <Routes>
           <Route path="/home" element={<HomePage />} />
           <Route path='/products' element={<ProductComponent />} />
+          <Route path='/my-components' element={<MyComponent />} />
         </Routes>
         </div>
       </Router>
