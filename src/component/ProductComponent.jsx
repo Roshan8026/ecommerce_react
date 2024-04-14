@@ -8,7 +8,10 @@ const productsData = [
   { id: 3, name: "Product 3", category: "Category B", price: "$20" },
   { id: 4, name: "Product 4", category: "Category B", price: "$25" },
   { id: 5, name: "Product 5", category: "Category C", price: "$30" },
-  // Add more products as needed
+  { id: 6, name: "Product 6", category: "Category D", price: "$35" }, // Added product for Category D
+  { id: 7, name: "Product 7", category: "Category D", price: "$40" }, // Added product for Category D
+  { id: 8, name: "Product 8", category: "Category E", price: "$45" }, // Added product for Category E
+  { id: 9, name: "Product 9", category: "Category E", price: "$50" }, // Added product for Category E
 ];
 
 const categories = Array.from(new Set(productsData.map(product => product.category)));

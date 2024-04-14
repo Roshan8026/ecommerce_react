@@ -4,17 +4,13 @@
   }
   
   .category-list {
-    display: flex;
-    flex-wrap: wrap;
+    overflow-x: auto;
+    white-space: nowrap;
     padding: 20px;
   }
   
   .category-row {
-    width: 100%;
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
   }
   
   .category {
