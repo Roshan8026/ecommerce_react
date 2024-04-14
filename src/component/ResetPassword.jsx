@@ -38,8 +38,8 @@ const ResetPassword = () => {
       
     return (
         <div>
-            <Navbar bg="dark" variant="dark" className="fixed-top">
-                <Navbar.Brand href="#">My App</Navbar.Brand>
+            <Navbar bg="primary" variant="dark" className="fixed-top">
+                <Navbar.Brand href="#">PC Health App</Navbar.Brand>
             </Navbar>
             <Container className="login-container">
                 <Row className="justify-content-center">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faHome, faUserCircle,faShoppingCart,faUsers } from '@fortawesome/free-solid-svg-icons';
 import './Example.css'; // Import your CSS file for styling
 import { Nav, NavItem } from 'react-bootstrap'; // Import Nav, NavItem, and NavLink
 import { NavLink } from 'react-router-dom'; // Import NavLink from react-router-dom
@@ -11,13 +11,17 @@ const tabs = [{
     icon: faHome,
     label: "Home"
 }, {
-    route: "/search",
-    icon: faSearch,
-    label: "Search"
+    route: "/products",
+    icon: faShoppingCart,
+    label: "Product"
+},  {
+    route: "/team",
+    icon: faUsers,
+    label: "Team"
 }, {
-    route: "/signup",
+    route: "/my",
     icon: faUserCircle,
-    label: "Signup"
+    label: "My"
 }]
 
 const Navigation = (props) => {
