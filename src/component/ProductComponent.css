@@ -57,3 +57,46 @@
     }
   }
   
+  .product-container {
+    display: flex;
+    justify-content: space-between; /* Ensure space between columns */
+  }
+  
+  .product-card {
+    display: flex; /* Display children in a row */
+    margin-bottom: 20px; /* Add some spacing between product cards */
+  }
+  
+  .product-image {
+    flex: 1; /* Take up one-third of the space */
+  }
+  
+  .product-details {
+    flex: 1; /* Take up two-thirds of the space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Additional styling for product details */
+  .product-details h3 {
+    margin-top: 0;
+  }
+  
+  .product-details p {
+    margin: 5px 0;
+  }
+  
+  .category-list {
+    flex: 1; /* Make category list take up one-third of the space */
+  }
+
+  .product-details p:last-child {
+    text-align: center; /* Center the last paragraph (which contains the price) */
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Adjust as needed */
+  }

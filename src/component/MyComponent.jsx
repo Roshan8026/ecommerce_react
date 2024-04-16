@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FaUser, FaAngleRight } from 'react-icons/fa'; // Importing the user and right arrow icons
-import './MyComponent.css'; // Import your CSS file for styling
+import { FaUser, FaAngleRight } from 'react-icons/fa';
+import './MyComponent.css';
 
 const MyComponent = () => {
   const [accordionItems, setAccordionItems] = useState([
@@ -26,13 +26,11 @@ const MyComponent = () => {
               type="button"
               onClick={() => toggleAccordion(item.id)}
             >
-              <FaUser className="user-icon" /> {/* User icon */}
+              <FaUser className="user-icon" />
               <span className="accordion-title">{item.title}</span>
-              {!item.isOpen && (
-                <span className="arrow-icon">
-                  <FaAngleRight /> {/* Right arrow icon */}
-                </span>
-              )}
+              <span className={`arrow-icon ${item.isOpen ? 'open' : ''}`}>
+                <FaAngleRight />
+              </span>
             </button>
           </div>
         ))}

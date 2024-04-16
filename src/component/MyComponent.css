@@ -6,7 +6,11 @@
     flex-grow: 1; /* Allow the title to take up remaining space */
   }
   
+
   .arrow-icon {
-    margin-left: 8px; /* Adjust the gap between the title and the arrow */
+    transition: transform 0.3s ease;
   }
   
+  .arrow-icon.open {
+    transform: rotate(90deg); /* Rotates the arrow 90 degrees to point downwards */
+  }
