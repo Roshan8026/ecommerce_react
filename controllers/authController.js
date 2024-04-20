@@ -4,8 +4,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const axios = require('axios');
+const unirest = require("unirest");
 
-exports.test = async (req , res) => {
+exports.test = async (req, res) => {
   return res.status(200).json({ message: 'This is url is working ' });
 
 }
@@ -26,16 +27,39 @@ function generateInvitationCode(length) {
 exports.send_otp = async (req, res) => {
   try {
     const mobileNumber = req.body.mobileNumber;
+    console.log('mobileNumber', mobileNumber);
     const otp = Math.floor(100000 + Math.random() * 900000);
-    const response = await axios.get('https://www.fast2sms.com/dev/bulk', {
-      params: {
-        authorization: process.env.FAST2SMS_API_KEY,
-        variables_values: `Your OTP is ${otp}`,
-        route: 'otp',
-        numbers: mobileNumber
-      }
+    // const response = await axios.get('https://www.fast2sms.com/dev/bulk', {
+    //   params: {
+    //     authorization: "NxBGeX3zQMysga4icb01w8YFCluvj2UJh9dDVWqIPmE6LAnRfpCDBkrK6fmYLndlAiJXxOpFqE8WZIRs",
+    //     sender_id: "FSTSMS",
+    //     message: `Your OTP is ${otp}`, // Include message text here
+    //     route: 'otp', // Use 'otp' as the route parameter
+    //     numbers: mobileNumber,
+    //     language: 'english' // Add the language parameter here
+    //   }
+    // });
+    const reque = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+
+    reque.query({
+      "authorization": "NxBGeX3zQMysga4icb01w8YFCluvj2UJh9dDVWqIPmE6LAnRfpCDBkrK6fmYLndlAiJXxOpFqE8WZIRs",
+      "variables_values": "5599",
+      "route": "otp",
+      "numbers": "8053818026",
     });
-    res.json({ success: true, message: 'OTP sent successfully!' });
+
+    reque.headers({
+      "cache-control": "no-cache"
+    });
+
+    reque.end(function (res) {
+      if (res.error) {
+        console.error(res.error);
+        throw new Error(res.error.message); // Throw an error if there's a problem
+      }
+
+      console.log(res.body);
+    });
   } catch (error) {
     console.error('Error sending OTP:', error);
     res.status(500).json({ success: false, message: 'Failed to send OTP.' });
@@ -82,12 +106,12 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the user
-    const user = await User.create({ mobile_number:mobile_number, password: hashedPassword, role: 'client', invitation_code: generateInvitationCode(6) });
+    const user = await User.create({ mobile_number: mobile_number, password: hashedPassword, role: 'client', invitation_code: generateInvitationCode(6) });
 
     // Generate a JWT token
     const token = jwt.sign({ userId: user.id }, 'secret-key', { expiresIn: '1h' });
 
-    res.status(200).json({ "token" : token , 'success': "Registered Successfully" });
+    res.status(200).json({ "token": token, 'success': "Registered Successfully" });
   } catch (error) {
     console.error('Registration failed:', error);
     res.status(500).json({ error: 'Registration failed' });
@@ -114,7 +138,7 @@ exports.login = async (req, res) => {
     // Generate a JWT token
     const token = jwt.sign({ userId: user.id }, 'secret-key', { expiresIn: '1h' });
 
-    res.status(200).json({ "token" : token , 'success': "Login Successfully",'user': user});
+    res.status(200).json({ "token": token, 'success': "Login Successfully", 'user': user });
   } catch (error) {
     console.error('Login failed:', error);
     res.status(500).json({ error: 'Login failed' });

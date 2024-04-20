@@ -1,19 +1,22 @@
 // server.js
 
-const express        = require('express');
-const { Op }         = require('sequelize');
-const sequelize      = require('./config/database');
-const jwt            = require('jsonwebtoken');
-const multer         = require('multer');
-const User           = require('./models/User');
-const Blog           = require('./models/Blog');
+const express = require('express');
+const { Op } = require('sequelize');
+const sequelize = require('./config/database');
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const User = require('./models/User');
+// const Blog = require('./models/Blog');
 const authController = require('./controllers/authController');
 const userController = require('./controllers/userController');
-const app            = express();
+const productController = require('./controllers/productController');
+const path = require('path');
+
+const app = express();
 const cors = require("cors")
 
 app.use(cors({
-  credentials:true
+  credentials: true
 }));
 app.use(express.json());
 
@@ -26,9 +29,9 @@ sequelize.sync()
     console.error('Failed to synchronize models:', error);
   });
 
- 
 
-  // Middleware to verify JWT token
+
+// Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
   const token = req.headers['authorization'];
   if (!token) {
@@ -45,45 +48,52 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Configure multer for handling form data
+const upload = multer();
+
+//checking node js 
+app.get('test', authController.test);
+
+// Registration route
+app.post('/api/send-otp', authController.send_otp);
+app.post('/api/register', upload.none(), authController.register);
+
+// all route
+app.post('/api/product-title', upload.none(), productController.addProductTitle);
+app.post('/api/product-add', upload.single('file'), productController.addProducts);
+
+// Login route
+app.post('/api/login', upload.none(), authController.login);
+
+// User route
+app.get('/users', verifyToken, userController.getUser);
+
+//Crud Operation performe on BlogPosts
+
+// app.get('/post', verifyToken, userController.getBlog);
+
+// app.post('/post', verifyToken, upload.none(), userController.postBlog);
 
 
-    // Configure multer for handling form data
-    const upload = multer();
-  
-    //checking node js 
-    app.get('test', authController.test);
-    // Registration route
-    app.post('/api/register',  upload.none(), authController.register);
-
-    // Login route
-    app.post('/api/login', upload.none(), authController.login);
-
-    // User route
-    app.get('/users', verifyToken,  userController.getUser);
-    
-    //Crud Operation performe on BlogPosts
-
-    app.get('/post', verifyToken, userController.getBlog);
-
-    app.post('/post', verifyToken,  upload.none(), userController.postBlog);
+// app.put('/posts/:id', verifyToken, upload.none(), userController.updateBlog);
 
 
-    app.put('/posts/:id', verifyToken, upload.none(),  userController.updateBlog);
+// app.delete('/posts/:id', verifyToken, userController.deleteBlog);
 
 
-    app.delete('/posts/:id',verifyToken, userController.deleteBlog);
+// // comments
 
+// app.post('/posts/:blogId/comments', verifyToken, upload.none(), userController.createComment);
 
-    // comments
+// //List comment for specific blog
 
-    app.post('/posts/:blogId/comments', verifyToken , upload.none(), userController.createComment);
-
-    //List comment for specific blog
-
-    app.get('/posts/:blogId', verifyToken , userController.listComment);
+// app.get('/posts/:blogId', verifyToken, userController.listComment);
 
 
 
-    app.listen(3000, () => {
-      console.log('Server running on port 3000');
-    });
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});

@@ -5,7 +5,15 @@ const sequelize = require('../config/database');
 const User = require('./User');
 
 const products = sequelize.define('products', {
-
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  product_title_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   img_url: {
     type: DataTypes.STRING, // Use DataTypes.STRING instead of just STRING
     allowNull: false,

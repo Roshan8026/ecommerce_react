@@ -5,7 +5,11 @@ const sequelize = require('../config/database');
 const Blog = require('./Product_title');
 
 const User = sequelize.define('User', {
-
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   mobile_number: {
     type: DataTypes.INTEGER,
     allowNull: false,
