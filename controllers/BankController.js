@@ -1,5 +1,5 @@
 // controllers/userController.js
-
+const bcrypt = require('bcrypt');
 const fs = require('fs').promises;
 const path = require('path');
 const multer = require('multer');
@@ -8,23 +8,30 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const UPLOADS_FOLDER = 'uploads'; // Folder where uploaded files will be stored
 
 const User = require('../models/User');
-const Product_title = require('../models/Product_title');
-const Products = require('../models/Products');
+const BankAccount = require('../models/BankAccount');
 
 // first product deactive  ??
 
 
-exports.addProductTitle = async (req, res) => {
+exports.addBankDetail = async (req, res) => {
   try {
-    const { title } = req.body;
-    const Product_titles = await Product_title.create({ title: title, active: 0 });
-    res.json({ status: 200, Message: "Product Title created successfully" });
+    const { cardholder_name, bank_name, bank_account, ifsc_code, bank_mobile_number,
+      withdraw_password } = req.body;
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(withdraw_password, 10);
+
+    const create = await BankAccount.create({
+      cardholder_name: cardholder_name,
+      bank_name: bank_name, bank_account: bank_account, ifsc_code: ifsc_code,
+      bank_mobile_number: bank_mobile_number, withdraw_password: hashedPassword
+    });
+    res.json({ status: 200, Message: "BankAccount  created successfully" });
   } catch (error) {
     res.status(500).json({ error: 'addProductTitle Internal server error' });
   }
 };
 
-exports.addProducts = async (req, res) => {
+exports.addWithdraw_passwords = async (req, res) => {
   try {
     const { product_title_id, title, price, validity_period, daily_income, total_revenue, total_return, purchase_limit, invitation_bonus, purchase_bonus, lucky_draw } = req.body;
 
@@ -110,7 +117,7 @@ exports.getProducts = async (req, res) => {
 exports.allProduct = async (req, res) => {
   try {
     // get products details also using relationship  ?? 
-    const ProductTitle = await Product_title.findAll(); // Use findByPk to find by primary key
+    const ProductTitle = await Product_title.findAll({ include: Products }); // Use findByPk to find by primary key
     if (!ProductTitle) {
       return res.status(404).json({ message: 'Product_title not found' });
     }

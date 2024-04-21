@@ -64,6 +64,8 @@ app.post('/api/register', upload.none(), authController.register);
 // all route
 app.post('/api/product-title', upload.none(), productController.addProductTitle);
 app.post('/api/product-add', upload.single('file'), productController.addProducts);
+app.get('/api/product_details/:id', productController.findProducts);
+app.get('/api/all_title_products', productController.allProduct);
 
 // Login route
 app.post('/api/login', upload.none(), authController.login);

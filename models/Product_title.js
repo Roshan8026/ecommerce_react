@@ -2,8 +2,9 @@
 
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+// const Products = require('./Products');
 
-const product_title = sequelize.define('product_title', {
+const Product_title = sequelize.define('product_title', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,7 +20,7 @@ const product_title = sequelize.define('product_title', {
   },
 });
 
-// Blog.belongsTo(User, { foreignKey: 'userId' });
+// Product_title.hasMany(Products, { foreignKey: 'product_title_id' });
 
 
-module.exports = product_title;
+module.exports = Product_title;

@@ -11,7 +11,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('bank_account', {
+    await queryInterface.createTable('bank_accounts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,23 +24,23 @@ module.exports = {
       },
       cardholder_name: {
         type: DataTypes.STRING, // Use DataTypes.STRING instead of just STRING
-        allowNull: false,
+        allowNull: true,
       },
       bank_name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       bank_account: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       ifsc_code: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       bank_mobile_number: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       withdraw_password: {
         type: DataTypes.INTEGER,
@@ -48,7 +48,7 @@ module.exports = {
       },
       otp: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -68,6 +68,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('bank_account');
+    await queryInterface.dropTable('bank_accounts');
   }
 };

@@ -1,8 +1,7 @@
-// models/Blog.js
 
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const User = require('./User');
+const Product_title = require('./Product_title');
 
 const products = sequelize.define('products', {
   id: {
@@ -60,7 +59,7 @@ const products = sequelize.define('products', {
   }
 });
 
-// Blog.belongsTo(User, { foreignKey: 'userId' });
+products.belongsTo(Product_title, { foreignKey: 'product_title_id' });
 
 
 module.exports = products;
