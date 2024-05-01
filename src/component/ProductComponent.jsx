@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ProductComponent.css'; // Import your CSS file for styling
-import { Button } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom'; // Import NavLink from react-router-dom
+import { Button ,Badge} from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
 // Sample data for products and categories
 const productsData = [
@@ -18,25 +18,38 @@ const productsData = [
 
 const categories = Array.from(new Set(productsData.map(product => product.category)));
 
-const Product = ({ product }) => (
-  <div className="product-card">
-    <div className="product-image">
-      <img src={product.image} alt={product.name} />
+const Product = ({ product }) => {
+  const navigate = useNavigate();
+
+  const handleDetailsClick = () => {
+    navigate(`/product-details/${product.id}`, { state: { product } });
+  };
+
+  return (
+    <div className="product-card">
+      <div className="product-image">
+        <img src={product.image} alt={product.name} />
+      </div>
+      <div className="product-details">
+        <h3>{product.name} <Badge bg="success">New</Badge> </h3>
+        <p>Category: <b>{product.category}</b></p>
+        <p>Category: <b>{product.category}</b></p>
+        <p>Category: <b>{product.category}</b></p>
+        <p>Price: <b>{product.price}</b></p>
+        <Button
+          variant="danger"
+          type="button"
+          className="btn-details"
+          onClick={handleDetailsClick}
+        >
+          Details
+        </Button>
+      </div>
+
     </div>
-    <div className="product-details">
-      <h3>{product.name}</h3>
-      <p>Category: {product.category}</p>
-      <p>Category: {product.category}</p>
-      <p>Category: {product.category}</p>
-      <p>{product.price}</p>
-    </div>
-    <div className="btn-container">
-      <Button variant="primary" type="submit" className="btn-details">
-        Details
-      </Button> 
-    </div>
-  </div>
-);
+
+  );
+};
 
 const ProductComponent = () => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]); // Initially select the first category

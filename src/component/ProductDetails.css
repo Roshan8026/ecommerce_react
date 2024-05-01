@@ -1,0 +1,35 @@
+.product-details {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .image-card {
+    flex: 1;
+  }
+  
+  .image-card img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .info-card {
+    padding: 10px;
+  }
+  
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .info-label {
+    font-weight: bold;
+  }
+  
+  .description-card {
+    padding: 10px;
+  }
+  
