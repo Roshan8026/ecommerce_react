@@ -31,8 +31,14 @@ const Product = ({ product }) => {
         <img src={product.image} alt={product.name} />
       </div>
       <div className="product-details">
-        <h3>{product.name} <Badge bg="success">New</Badge> </h3>
-        <p>Category: <b>{product.category}</b></p>
+      <div className="row">
+        <div className="col product-name">
+          <h3>{product.name}</h3>
+        </div>
+        <div className="col-auto">
+          <Badge bg="success">New</Badge>
+        </div>
+      </div>        <p>Category: <b>{product.category}</b></p>
         <p>Category: <b>{product.category}</b></p>
         <p>Category: <b>{product.category}</b></p>
         <p>Price: <b>{product.price}</b></p>
@@ -76,6 +82,9 @@ const ProductComponent = () => {
           <Product key={product.id} product={product} />
         ))}
       </div>
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

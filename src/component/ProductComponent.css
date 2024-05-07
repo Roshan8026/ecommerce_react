@@ -33,7 +33,7 @@
   .product-list {
     display: flex;
     flex-wrap: wrap;
-    padding: 20px;
+    padding: 1px;
   }
   
   .product-card {
@@ -84,7 +84,7 @@
   }
   
   .product-details p {
-    margin: 5px 0;
+    margin: 0px 0;
   }
   
   .category-list {
@@ -99,4 +99,8 @@
     display: flex;
     justify-content: center;
     margin-top: 10px; /* Adjust as needed */
+  }
+
+  .product-name {
+   margin-right: -4px;
   }
