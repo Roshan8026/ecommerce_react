@@ -12,6 +12,8 @@ import ProductComponent from './component/ProductComponent.jsx';
 import MyComponent from './component/MyComponent.jsx';
 import ProductDetails from './component/ProductDetails.jsx';
 import BankAccount from './component/BankAccount.jsx';
+import ChangePassword from './component/ChangePassword.jsx';
+import WithDrawPassword from './component/WithDrawPassword.jsx';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Assuming initial state is not logged in
@@ -40,6 +42,8 @@ const productsData = [
           <Route path="/product-details/:id" element={<ProductDetails products={productsData} />} />
           <Route path='/my-components' element={<MyComponent />} />
           <Route path='/bank-account' element={<BankAccount />} />
+          <Route path='/change-password' element={<ChangePassword />} />
+          <Route path='/withdraw-password' element={<WithDrawPassword />} />
         </Routes>
         </div>
       </Router>
