@@ -1,16 +1,65 @@
-.user-icon {
-    margin-right: 8px; /* Adjust the gap between the icon and the title */
+
+  .my-component {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .accordion {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .accordion-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    background: #f9f9f9;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .accordion-button.active {
+    background: #e0e0e0;
+  }
+  
+  .user-icon {
+    margin-right: 10px;
   }
   
   .accordion-title {
-    flex-grow: 1; /* Allow the title to take up remaining space */
+    flex-grow: 1;
+    text-align: left;
   }
   
-
   .arrow-icon {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s;
   }
   
   .arrow-icon.open {
-    transform: rotate(90deg); /* Rotates the arrow 90 degrees to point downwards */
+    transform: rotate(90deg);
   }
+  
+  .accordion-content {
+    padding: 10px;
+    background: #f9f9f9;
+  }
+  
+  .input-field {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
