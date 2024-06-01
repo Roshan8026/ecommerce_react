@@ -1,7 +1,7 @@
 import React , {useState} from 'react';
 import './Home.css';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Navbar, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import './SignupPage.css'; // Import your CSS file
 
 const spanStyle = {
     padding: '20px',
@@ -42,47 +42,60 @@ const ChangePassword = () => {
 
     return (
         <>
-        <h3>Change Password </h3>
-        <br/>
-         <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="oldPassword">
-                    <Form.Label>Old Password</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        placeholder="please enter old Password" 
-                        name="oldPassword" 
-                        value={formData.oldPassword}
-                        onChange={handleChange} 
-                    />
-                </Form.Group>
+        <Navbar bg="primary" variant="dark" className="fixed-top">
+                <Navbar.Brand href="#">Change Password</Navbar.Brand>
+            </Navbar>
+            <Container className="login-container">
+                <Row className="justify-content-center">
+                    <Col xs={12} md={6}>
+                        <Card className="reset-password-card" style={{width: '154%'}}>
+                            <Card.Body>
+                    <h3>Change Password </h3>
+                    <br/>
+                    <Form onSubmit={handleSubmit}>
+                            <Form.Group className="mb-3" controlId="oldPassword">
+                                <Form.Label>Old Password</Form.Label>
+                                <Form.Control 
+                                    type="text" 
+                                    placeholder="please enter old Password" 
+                                    name="oldPassword" 
+                                    value={formData.oldPassword}
+                                    onChange={handleChange} 
+                                />
+                            </Form.Group>
 
-                <Form.Group className="mb-3" controlId="newPassword">
-                    <Form.Label>New Password</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        placeholder="Please Enter New Password" 
-                        name="newPassword" 
-                        value={formData.newPassword}
-                        onChange={handleChange} 
-                    />
-                </Form.Group>
+                            <Form.Group className="mb-3" controlId="newPassword">
+                                <Form.Label>New Password</Form.Label>
+                                <Form.Control 
+                                    type="text" 
+                                    placeholder="Please Enter New Password" 
+                                    name="newPassword" 
+                                    value={formData.newPassword}
+                                    onChange={handleChange} 
+                                />
+                            </Form.Group>
 
-                <Form.Group className="mb-3" controlId="againPassword">
-                    <Form.Label>Again Password</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        placeholder="Please enter new Password Again" 
-                        name="againPassword" 
-                        value={formData.againPassword}
-                        onChange={handleChange} 
-                    />
-                </Form.Group>
-               
-                <br/>
-                <Button variant="primary" type="submit">
-                    confirm
-                </Button>
-            </Form>
+                            <Form.Group className="mb-3" controlId="againPassword">
+                                <Form.Label>Again Password</Form.Label>
+                                <Form.Control 
+                                    type="text" 
+                                    placeholder="Please enter new Password Again" 
+                                    name="againPassword" 
+                                    value={formData.againPassword}
+                                    onChange={handleChange} 
+                                />
+                            </Form.Group>
+                        
+                            <br/>
+                            <Button variant="primary" type="submit">
+                                confirm
+                            </Button>
+                    </Form>
+                    </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         </> 
     )
 }

@@ -65,23 +65,11 @@ const MyComponent = () => {
           navigate('/bank-account');
           break;
         case 'typeF':
-          return (
-            <>
-              <input type="text" className="input-field" placeholder="Input 1" />
-              <input type="text" className="input-field" placeholder="Input 2" />
-              <input type="text" className="input-field" placeholder="Input 3" />
-              <input type="text" className="input-field" placeholder="Input 4" />
-            </>
-          );
+          navigate('/change-password');
+          break;
         case 'typeG':
-          return (
-            <>
-              <input type="text" className="input-field" placeholder="Input 1" />
-              <input type="text" className="input-field" placeholder="Input 2" />
-              <input type="text" className="input-field" placeholder="Input 3" />
-              <input type="text" className="input-field" placeholder="Input 4" />
-            </>
-          );
+          navigate('/withdraw-password');
+          break;
       default:
         return null;
     }
