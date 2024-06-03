@@ -14,6 +14,11 @@ import ProductDetails from './component/ProductDetails.jsx';
 import BankAccount from './component/BankAccount.jsx';
 import ChangePassword from './component/ChangePassword.jsx';
 import WithDrawPassword from './component/WithDrawPassword.jsx';
+import ReferFriend from './component/ReferFriend.jsx';
+import Transaction from './component/Transaction.jsx';
+import Order from './component/Order.jsx';
+import WithDraw from './component/WithDraw.jsx';
+
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Assuming initial state is not logged in
@@ -44,6 +49,10 @@ const productsData = [
           <Route path='/bank-account' element={<BankAccount />} />
           <Route path='/change-password' element={<ChangePassword />} />
           <Route path='/withdraw-password' element={<WithDrawPassword />} />
+          <Route path='/refer-friends' element={<ReferFriend />}/>
+          <Route path='/transaction' element={<Transaction />} />
+          <Route path='/orders' element={<Order />} />
+          <Route path='/withdraw' element={<WithDraw />} />
         </Routes>
         </div>
       </Router>

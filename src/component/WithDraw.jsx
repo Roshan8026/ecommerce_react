@@ -3,7 +3,7 @@ import { Navbar, Container, Row, Col, Card, Form, Button } from 'react-bootstrap
 import './SignupPage.css'; // Import your CSS file
 import { NavLink } from 'react-router-dom'; // Import NavLink from react-router-dom
 
-const WithDrawPassword = () => {
+const WithDraw = () => {
       // State to manage the countdown timer
       const [countdown, setCountdown] = useState(0);
       // Text for the send button
@@ -39,47 +39,37 @@ const WithDrawPassword = () => {
     return (
         <div>
             <Navbar bg="primary" variant="dark" className="fixed-top">
-                <Navbar.Brand href="#">Withdraw Password</Navbar.Brand>
+                <Navbar.Brand href="#">Withdraw </Navbar.Brand>
             </Navbar>
             <Container className="login-container">
                 <Row className="justify-content-center">
                     <Col xs={12} md={6}>
                         <Card className="reset-password-card">
                             <Card.Body>
-                                <h2 style={{fontWeight: 'bold', marginBottom: '15px'}}> Change Withdraw Password </h2>
+                                <Card>
+                                <Card.Body>
+                                    <h6>0 Rs </h6>
+                                    Total Balance
+                                </Card.Body>
+                                </Card>
+                                <br/>
                                 <Form>
                                     <Row className="mb-3">
                                         <Col>
-                                            <Form.Control type="number" placeholder="Please Enter Mobile Number" className="form-control" />
+                                            <Form.Control type="number" placeholder="Withraw Amount" className="form-control" />
                                         </Col>
                                     </Row>
                                     <Row className="mb-3">
                                         <Col>
-                                            <Form.Control type="password" placeholder="Please input Password " className="form-control" />
+                                            <Form.Control type="password" placeholder="withdraw Password " className="form-control" />
                                         </Col>
                                     </Row>
-                                    <Row className="mb-3">
-                                        <Col>
-                                            <Form.Control type="password" placeholder="Please enter password again" className="form-control" />
-                                        </Col>
-                                    </Row>
-                                    <Row className="mb-3">
-                                        <Col xs={8}>
-                                            <Form.Control type="text" placeholder="Verification Code" className="form-control" />
-                                        </Col>
-                                        <Col xs={4}>
-                                            <Button variant="primary" type="submit"
-                                            disabled={countdown > 0} // Disable button while countdown is active
-                                            onClick={handleSendClick}
-                                            className="btn-send" style={{ height: "73%" }}>
-                                                 {sendButtonText}
-                                            </Button>
-                                        </Col>
-                                    </Row>
+                                    <h6> Total Transaction fees : 6 %</h6>
+
                                     <Row>
                                         <Col>
                                             <Button variant="primary" type="submit" className="btn-signup">
-                                                Confirm
+                                                Withdraw
                                             </Button>
                                         </Col>
                                     </Row>
@@ -94,4 +84,4 @@ const WithDrawPassword = () => {
     );
 };
 
-export default WithDrawPassword;
+export default WithDraw;

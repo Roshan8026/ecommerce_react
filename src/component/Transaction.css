@@ -1,0 +1,9 @@
+.button-row-container {
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly */
+  }
+  
+  .btn-signup {
+    flex: 1; /* Each button occupies equal space */
+    margin: 0 5px; /* Add margin between buttons */
+  }

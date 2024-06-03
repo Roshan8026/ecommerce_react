@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { FaUser, FaAngleRight } from 'react-icons/fa';
 import './MyComponent.css';
 import { useNavigate } from "react-router-dom";
+import { Navbar, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 
 
 const MyComponent = () => {
   const [accordionItems, setAccordionItems] = useState([
     { id: 1, title: "My Order", isOpen: false, formType: 'typeA' },
     { id: 2, title: "Transaction", isOpen: false, formType: 'typeB' },
-    { id: 3, title: "My Coupons", isOpen: false, formType: 'typeC' },
     { id: 4, title: "Refer Friends", isOpen: false, formType: 'typeD' },
     { id: 5, title: "My Bank Account", isOpen: false, formType: 'typeE' },
     { id: 6, title: "Change Password", isOpen: false, formType: 'typeF' },
@@ -27,40 +27,14 @@ const MyComponent = () => {
   const renderForm = (formType) => {
     switch (formType) {
       case 'typeA':
-        return (
-          <>
-            <input type="text" className="input-field" placeholder="Input 1" />
-            <input type="text" className="input-field" placeholder="Input 2" />
-            <input type="text" className="input-field" placeholder="Input 3" />
-            <input type="text" className="input-field" placeholder="Input 4" />
-            <input type="text" className="input-field" placeholder="Input 5" />
-          </>
-        );
+          navigate('/orders');
+        break;
       case 'typeB':
-        return (
-          <>
-            <input type="text" className="input-field" placeholder="Input 1" />
-            <input type="text" className="input-field" placeholder="Input 2" />
-          </>
-        );
-      case 'typeC':
-        return (
-          <>
-            <input type="text" className="input-field" placeholder="Input 1" />
-            <input type="text" className="input-field" placeholder="Input 2" />
-            <input type="text" className="input-field" placeholder="Input 3" />
-            <input type="text" className="input-field" placeholder="Input 4" />
-          </>
-        );
+        navigate('/transaction');
+        break;
         case 'typeD':
-        return (
-          <>
-            <input type="text" className="input-field" placeholder="Input 1" />
-            <input type="text" className="input-field" placeholder="Input 2" />
-            <input type="text" className="input-field" placeholder="Input 3" />
-            <input type="text" className="input-field" placeholder="Input 4" />
-          </>
-        );
+          navigate('/refer-friends');
+          break;
         case 'typeE':
           navigate('/bank-account');
           break;
@@ -77,6 +51,18 @@ const MyComponent = () => {
 
   return (
     <div className="my-component">
+        <div className="button-row-container">
+                                
+                                    <Button variant="primary" type="submit" className="btn-signup"
+                                                  onClick={() => navigate('/withdraw-password')}
+                                                  >
+                                        Recharge
+                                    </Button>
+                                    <Button variant="primary" type="submit" className="btn-signup"
+                                     onClick={() => navigate('/withdraw')}>
+                                        Withdraw
+                                    </Button>
+                                </div>
       <div className="accordion">
         {accordionItems.map(item => (
           <div className="accordion-item" key={item.id}>
@@ -87,9 +73,8 @@ const MyComponent = () => {
             >
               <FaUser className="user-icon" />
               <span className="accordion-title">{item.title}</span>
-              <span className={`arrow-icon ${item.isOpen ? 'open' : ''}`}>
-                <FaAngleRight />
-              </span>
+              {/* <span className={`arrow-icon ${item.isOpen ? 'open' : ''}`}>
+              </span> */}
             </button>
             {item.isOpen && (
               <div className="accordion-content">
