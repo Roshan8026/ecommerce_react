@@ -63,3 +63,27 @@
     border-radius: 4px;
   }
   
+
+  .card-body-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+  }
+  
+  .icon-container {
+    margin-right: 10px; /* Add margin between icon and text */
+  }
+  
+  .user-icon {
+    font-size: 24px; /* Adjust icon size */
+    color: #007bff; /* Adjust icon color */
+  }
+  
+  .user-id {
+    font-weight: bold; /* Make user ID bold */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .other-info {
+    margin: 0; /* Remove default margin */
+  }
+  
