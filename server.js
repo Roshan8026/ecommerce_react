@@ -11,6 +11,7 @@ const authController = require('./controllers/authController');
 const userController = require('./controllers/userController');
 const productController = require('./controllers/productController');
 const path = require('path');
+const nodemailer = require("nodemailer");
 
 const app = express();
 const cors = require("cors")
@@ -59,7 +60,10 @@ app.get('test', authController.test);
 
 // Registration route
 app.post('/api/send-otp', authController.send_otp);
+app.get('/api/verify_otp',authController.verify_otp);
 app.post('/api/register', upload.none(), authController.register);
+app.post('/api/login', upload.none(), authController.login);
+app.post('/api/reset_password', authController.reset_password);
 
 // all route
 app.post('/api/product-title', upload.none(), productController.addProductTitle);
@@ -68,7 +72,6 @@ app.get('/api/product_details/:id', productController.findProducts);
 app.get('/api/all_title_products', productController.allProduct);
 
 // Login route
-app.post('/api/login', upload.none(), authController.login);
 
 // User route
 app.get('/users', verifyToken, userController.getUser);
@@ -97,5 +100,28 @@ app.get('/users', verifyToken, userController.getUser);
 
 
 app.listen(3000, () => {
+  // const transporter = nodemailer.createTransport({
+  //   service: "Gmail",
+  //   host: "smtp.gmail.com",
+  //   port: 465,
+  //   secure: true,
+  //   auth: {
+  //     user: "protein19910001@gmail.com",
+  //     pass: "fspzcgigiteouxkl",
+  //   },
+  // });
+  // const mailOptions = {
+  //   from: "protein19910001@gmail.com",
+  //   to: "abdulkayum0912@gmail.com",
+  //   subject: "Hello from Protein",
+  //   text: "This is a test email sent using Testing .",
+  // };
+  // transporter.sendMail(mailOptions, (error, info) => {
+  //   if (error) {
+  //     console.error("Error sending email: ", error);
+  //   } else {
+  //     console.log("Email sent: ", info.response);
+  //   }
+  // });
   console.log('Server running on port 3000');
 });

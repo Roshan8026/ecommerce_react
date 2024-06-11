@@ -10,8 +10,8 @@ const User = sequelize.define('User', {
     primaryKey: true,
     autoIncrement: true,
   },
-  mobile_number: {
-    type: DataTypes.INTEGER,
+  email: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
   password: {

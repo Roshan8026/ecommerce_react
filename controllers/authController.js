@@ -5,6 +5,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const axios = require('axios');
 const unirest = require("unirest");
+const nodemailer = require("nodemailer");
 
 exports.test = async (req, res) => {
   return res.status(200).json({ message: 'This is url is working ' });
@@ -66,47 +67,69 @@ exports.send_otp = async (req, res) => {
   }
 }
 
-// Assuming you have an array or database to store the generated OTPs for each user
-const otpStore = {};
-
 exports.verify_otp = async (req, res) => {
-  const { mobileNumber, otp } = req.body;
+  const { email, otp } = req.body;
+  let key = req.body.key ?? null;
 
-  // Check if the mobile number exists in the OTP store
-  if (otpStore.hasOwnProperty(mobileNumber)) {
-    // Get the stored OTP and its expiration time
-    const { storedOTP, expirationTime } = otpStore[mobileNumber];
-
-    // Verify the OTP and check if it's not expired
-    if (storedOTP === otp && Date.now() < expirationTime) {
-      // OTP verification successful
-      res.json({ success: true, message: 'OTP verification successful!' });
+  const existingUser = await User.findOne({ where: { email } });
+    if (!existingUser) {
+      return res.status(400).json({ error: 'Invalid Email Id' });
     } else {
-      // Invalid OTP or expired OTP
-      res.status(400).json({ success: false, message: 'Invalid OTP.' });
+      console.log('existingUser', existingUser?.dataValues.otp);
+      if(existingUser?.dataValues.otp == otp) {
+        // Update the active column
+        await User.update({ active: true }, { where: { email } });
+        if(key == "1") {
+          return res.status(200).json({ message: 'Password Reset successfully' });
+        } else {
+          return res.status(200).json({ message: 'User verified and activated successfully' });
+        }
+      } else {
+        return res.status(404).json({ error: 'Otp is Wrong . Please enter correct Otp' });
+      }
     }
-  } else {
-    // Mobile number not found or OTP expired
-    res.status(400).json({ success: false, message: 'Mobile number not found or OTP expired.' });
+}
+
+exports.reset_password = async (req, res) => {
+  const { email, password } = req.body;
+  const existingUser = await User.findOne({ where: { email } });
+    if (!existingUser) {
+      return res.status(400).json({ error: 'Invalid Email Id' });
+    } else {
+      const otp = Math.floor(100000 + Math.random() * 900000);
+      let message = "Your Password is reset : " + otp;
+      let subject = "Reset Password";
+      await sendOtp(email,message,subject)
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      // Update the active column
+      await User.update({ otp: otp , password: hashedPassword}, { where: { email } });
+
+      return res.status(200).json({ message: 'Password Reset Successfully' });
   }
 }
 
 // Registration controller
 exports.register = async (req, res) => {
   try {
-    const { mobile_number, password } = req.body;
+    const { email, password } = req.body;
 
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    let message = "This is a test email sent using Testing. This is your otp" + otp;
+    let subject = "Hello from Protein";
+
+    await sendOtp(email,message,subject)
     // Check if the user with the given email already exists
-    const existingUser = await User.findOne({ where: { mobile_number } });
+    const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: 'Mobile Number already exists' });
+      return res.status(400).json({ error: 'email Number already exists' });
     }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the user
-    const user = await User.create({ mobile_number: mobile_number, password: hashedPassword, role: 'client', invitation_code: generateInvitationCode(6) });
+    const user = await User.create({ email: email, password: hashedPassword, role: 'client', invitation_code: generateInvitationCode(6), active: 0, otp:otp});
 
     // Generate a JWT token
     const token = jwt.sign({ userId: user.id }, 'secret-key', { expiresIn: '1h' });
@@ -121,10 +144,10 @@ exports.register = async (req, res) => {
 // Login controller
 exports.login = async (req, res) => {
   try {
-    const { mobile_number, password } = req.body;
+    const { email, password } = req.body;
 
     // Check if the user exists
-    const user = await User.findOne({ where: { mobile_number } });
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -144,3 +167,29 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: 'Login failed' });
   }
 };
+
+async function sendOtp(email, message, subject) {
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "protein19910001@gmail.com",
+        pass: "fspzcgigiteouxkl",
+      },
+    });
+    const mailOptions = {
+      from: "protein19910001@gmail.com",
+      to: email,
+      subject: subject,
+      text: message
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email: ", error);
+      } else {
+        console.log("Email sent: ", info.response);
+      }
+    });
+}
