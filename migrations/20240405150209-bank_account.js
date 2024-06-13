@@ -43,7 +43,7 @@ module.exports = {
         allowNull: true,
       },
       withdraw_password: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
       },
       otp: {

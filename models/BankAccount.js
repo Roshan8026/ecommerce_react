@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const User = require('./User');
 
-const products = sequelize.define('products', {
+const products = sequelize.define('bank_accounts', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -35,7 +35,7 @@ const products = sequelize.define('products', {
     allowNull: true,
   },
   withdraw_password: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   otp: {

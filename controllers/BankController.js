@@ -15,18 +15,27 @@ const BankAccount = require('../models/BankAccount');
 
 exports.addBankDetail = async (req, res) => {
   try {
-    const { cardholder_name, bank_name, bank_account, ifsc_code, bank_mobile_number,
-      withdraw_password } = req.body;
+    console.log('addBankDetail')
+    const { cardholder_name, bank_name, bank_account, ifsc_code, bank_mobile_number, withdraw_password } = req.body;
+    
     // Hash the password
     const hashedPassword = await bcrypt.hash(withdraw_password, 10);
 
+    console.log('hashedPassword',hashedPassword);
+
     const create = await BankAccount.create({
+      user_id: req.userId,
       cardholder_name: cardholder_name,
-      bank_name: bank_name, bank_account: bank_account, ifsc_code: ifsc_code,
-      bank_mobile_number: bank_mobile_number, withdraw_password: hashedPassword
+      bank_name: bank_name,
+      bank_account: bank_account,
+      ifsc_code: ifsc_code,
+      bank_mobile_number: bank_mobile_number,
+      withdraw_password: withdraw_password
     });
-    res.json({ status: 200, Message: "BankAccount  created successfully" });
+
+    res.json({ status: 200, Message: "BankAccount created successfully" });
   } catch (error) {
+    console.log('error',error);
     res.status(500).json({ error: 'addProductTitle Internal server error' });
   }
 };

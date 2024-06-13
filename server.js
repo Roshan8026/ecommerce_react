@@ -12,6 +12,8 @@ const userController = require('./controllers/userController');
 const productController = require('./controllers/productController');
 const path = require('path');
 const nodemailer = require("nodemailer");
+const BankController = require('./controllers/BankController');
+
 
 const app = express();
 const cors = require("cors")
@@ -66,10 +68,11 @@ app.post('/api/login', upload.none(), authController.login);
 app.post('/api/reset_password', authController.reset_password);
 
 // all route
-app.post('/api/product-title', upload.none(), productController.addProductTitle);
-app.post('/api/product-add', upload.single('file'), productController.addProducts);
-app.get('/api/product_details/:id', productController.findProducts);
-app.get('/api/all_title_products', productController.allProduct);
+app.post('/api/product-title',verifyToken,  upload.none(), productController.addProductTitle);
+app.post('/api/product-add',verifyToken, upload.single('file'), productController.addProducts);
+app.get('/api/product_details/:id', verifyToken, productController.findProducts);
+app.get('/api/all_title_products', verifyToken, productController.allProduct);
+app.post('/api/bank-add', verifyToken, upload.none(), BankController.addBankDetail)
 
 // Login route
 
