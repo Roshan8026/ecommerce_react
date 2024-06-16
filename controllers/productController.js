@@ -110,7 +110,15 @@ exports.getProducts = async (req, res) => {
 exports.allProduct = async (req, res) => {
   try {
     // get products details also using relationship  ?? 
-    const ProductTitle = await Product_title.findAll(); // Use findByPk to find by primary key
+    // const ProductTitle = await Product_title.findAll(); // Use findByPk to find by primary key
+
+    const ProductTitle = await Products.findAll({
+      include: [{
+        model: Product_title,
+        attributes: ['id', 'title', 'active', 'createdAt', 'updatedAt'] // Specify the attributes to include
+      }]
+    });
+
     if (!ProductTitle) {
       return res.status(404).json({ message: 'Product_title not found' });
     }
