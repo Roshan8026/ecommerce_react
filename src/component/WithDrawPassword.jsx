@@ -39,12 +39,12 @@ const WithDrawPassword = () => {
     return (
         <div>
             <Navbar bg="primary" variant="dark" className="fixed-top">
-                <Navbar.Brand href="#">Withdraw Password</Navbar.Brand>
+                <Navbar.Brand href="#" className='px-4'>Withdraw Password</Navbar.Brand>
             </Navbar>
-            <Container className="login-container">
-                <Row className="justify-content-center">
-                    <Col xs={12} md={6}>
-                        <Card className="reset-password-card">
+          <div className="container mt-5 pt-5">
+            <div className="row">
+                <div className="col-md-12">
+                <Card className="reset-password-card">
                             <Card.Body>
                                 <h2 style={{fontWeight: 'bold', marginBottom: '15px'}}> Change Withdraw Password </h2>
                                 <Form>
@@ -87,9 +87,9 @@ const WithDrawPassword = () => {
                                 </Form>
                             </Card.Body>
                         </Card>
-                    </Col>
-                </Row>
-            </Container>
+                </div>
+            </div>
+          </div>
         </div>
     );
 };

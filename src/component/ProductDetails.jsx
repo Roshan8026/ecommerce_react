@@ -24,7 +24,11 @@ const ProductDetails = ({ products }) => {
         </Container>
       </Navbar>
         <br/>
-      <div className="product-details">
+
+
+
+
+      <div className="product-details ">
         <div className="image-card">
           <img src={product.image} alt="Product" />
         </div>

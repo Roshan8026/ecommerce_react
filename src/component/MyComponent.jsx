@@ -3,6 +3,7 @@ import { FaUser, FaAngleRight } from 'react-icons/fa';
 import './MyComponent.css';
 import { useNavigate } from "react-router-dom";
 import { Navbar, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { FcBusinessman } from "react-icons/fc";
 
 
 const MyComponent = () => {
@@ -53,22 +54,31 @@ const MyComponent = () => {
     <>
    
 
-    <div className="my-component"> <Navbar bg="primary" variant="dark" className="fixed-top">
-                <Navbar.Brand href="#">Account Center </Navbar.Brand>
+    <div className="my-component "> <Navbar bg="primary" variant="dark" className="fixed-top">
+                <Navbar.Brand href="#" className='px-4'>Account Center </Navbar.Brand>
             </Navbar>
    <br/>
    <br/>
-   <Card>
-   <Card.Body className="card-body-container">
-      <div className="icon-container">
-        <FaUser className="user-icon" />
+   <Card className='p-3 mt-5 mx-2 border-0'>
+   <Card.Body className="card-body-container user-box">
+      <div className="icon-container user-img ">
+        {/* <FaUser className="user-icon" /> */}
+        <FcBusinessman />
       </div>
-      <div className="text-container">
+      <div className="">
         <p className="user-id">78788</p>
-        <p className="other-info">444</p>
+        <p className="other-info text-danger">444</p>
       </div>
+
+
     </Card.Body>
-    <div className="button-row-container">    
+
+
+    <div className="button-row-container">  
+    <div className="text-container">
+                <p className="user-id">0</p>
+                <p className="other-info">Recharge</p>
+              </div>
             <div className="text-container">
                 <p className="user-id">0</p>
                 <p className="other-info">Recharge</p>
@@ -108,7 +118,7 @@ const MyComponent = () => {
               </div>
               
         </div>
-                                </Card>
+              </Card>
    <br/>
 
         <div className="button-row-container">    
@@ -122,7 +132,7 @@ const MyComponent = () => {
                 Withdraw
             </Button>
         </div>
-      <div className="accordion">
+      <div className="accordion mb-5 pb-5">
         {accordionItems.map(item => (
           <div className="accordion-item" key={item.id}>
             <button

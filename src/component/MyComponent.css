@@ -8,7 +8,8 @@
   .accordion {
     border: 1px solid #ddd;
     border-radius: 4px;
-    overflow: hidden;
+    /* overflow: hidden; */
+    margin-top: 20px;
   }
   
   .accordion-item {
@@ -87,3 +88,28 @@
     margin: 0; /* Remove default margin */
   }
   
+
+  .card{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  
+    
+  }
+
+  .user-img{
+    font-size: 40px;
+    margin-bottom: 18px;
+  }
+
+  .user-box{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 10px;
+    
+  }
+
+  .text-container{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 20px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+
+  }

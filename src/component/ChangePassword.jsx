@@ -3,6 +3,7 @@ import './Home.css';
 import { Navbar, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import './SignupPage.css'; // Import your CSS file
 
+
 const spanStyle = {
     padding: '20px',
     background: '#efefef',
@@ -43,12 +44,14 @@ const ChangePassword = () => {
     return (
         <>
         <Navbar bg="primary" variant="dark" className="fixed-top">
-                <Navbar.Brand href="#">Change Password</Navbar.Brand>
+                <Navbar.Brand href="#" className='px-4'>Change Password</Navbar.Brand>
             </Navbar>
-            <Container className="login-container">
-                <Row className="justify-content-center">
-                    <Col xs={12} md={6}>
-                        <Card className="reset-password-card" style={{width: '154%'}}>
+
+            <section className='mt-5 pt-5'>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12">
+                        <Card className="reset-password-card card " style={{width: '154%'}}>
                             <Card.Body>
                     <h3>Change Password </h3>
                     <br/>
@@ -93,9 +96,11 @@ const ChangePassword = () => {
                     </Form>
                     </Card.Body>
                         </Card>
-                    </Col>
-                </Row>
-            </Container>
+                        </div>
+                    </div>
+                </div>
+            </section>
+          
         </> 
     )
 }

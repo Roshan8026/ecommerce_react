@@ -1,9 +1,15 @@
 .button-row-container {
     display: flex;
-    justify-content: space-between; /* Distribute buttons evenly */
+    justify-content: space-around; /* Distribute buttons evenly */
+    text-align: center;
   }
   
   .btn-signup {
     flex: 1; /* Each button occupies equal space */
     margin: 0 5px; /* Add margin between buttons */
+  }
+
+  .scanner-card{
+    margin-top: 90px;
+    padding: 20px;
   }

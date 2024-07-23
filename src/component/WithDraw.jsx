@@ -39,12 +39,13 @@ const WithDraw = () => {
     return (
         <div>
             <Navbar bg="primary" variant="dark" className="fixed-top">
-                <Navbar.Brand href="#">Withdraw </Navbar.Brand>
+                <Navbar.Brand href="#" className='px-4'>Withdraw </Navbar.Brand>
             </Navbar>
-            <Container className="login-container">
-                <Row className="justify-content-center">
-                    <Col xs={12} md={6}>
-                        <Card className="reset-password-card">
+         <section>
+            <div className="container mt-5 pt-5">
+                <div className="row">
+                    <div className="col-md-12">
+                    <Card className="reset-password-card">
                             <Card.Body>
                                 <Card>
                                 <Card.Body>
@@ -68,7 +69,7 @@ const WithDraw = () => {
 
                                     <Row>
                                         <Col>
-                                            <Button variant="primary" type="submit" className="btn-signup">
+                                            <Button variant="primary" type="submit" className="btn-signup mt-3">
                                                 Withdraw
                                             </Button>
                                         </Col>
@@ -77,9 +78,10 @@ const WithDraw = () => {
                                 </Form>
                             </Card.Body>
                         </Card>
-                    </Col>
-                </Row>
-            </Container>
+                    </div>
+                </div>
+            </div>
+         </section>
         </div>
     );
 };

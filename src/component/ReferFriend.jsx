@@ -18,11 +18,34 @@ const ReferFriend = () => {
     return (
         <div>
             <Navbar bg="primary" variant="dark" className="fixed-top">
-                <Navbar.Brand href="#">Refer Friends</Navbar.Brand>
+                <Navbar.Brand href="#" className='px-4'>Refer Friends</Navbar.Brand>
             </Navbar>
-            <Container className="login-container">
+
+<div className="container mb-5 pb-5">
+    <div className="row">
+        <div className="col-md-3"></div>
+        <div className="col-md-6">
+            <div className="card scanner-card" >
+                <h4 className='text-center py-3'>SCAN QR Code to Join</h4>
+            <div className='d-block m-auto'>
+                                        <QRCode value={qrData} />
+                                    </div>
+                                    <em className='text-center py-3'>My Invitation Code</em>
+                                <div className='text-center'>
+                                <button type="submit" class="btn-signup btn btn-light border w-25">N802eb</button>
+                                </div>
+                                <button type="submit" class=" btn btn-primary my-4 mx-5">Copy</button>
+
+            </div>
+        </div>
+        <div className="col-md-3"></div>
+    </div>
+</div>
+
+
+            <Container className="login-container d-none">
                 <Row className="justify-content-center">
-                    <Col xs={12} md={6}>
+                    <Col xs={12} md={12} lg={12}>
                         <Card className="reset-password-card">
                             <Card.Body>
                                 <h2 style={{fontWeight: 'bold', marginBottom: '15px'}}> Scan Qr Code to Join </h2>

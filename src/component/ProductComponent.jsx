@@ -26,7 +26,55 @@ const Product = ({ product }) => {
   };
 
   return (
-    <div className="product-card">
+
+
+<>
+<div className="container">
+  <div className="row ">
+    <div className="col-md-4">
+      <div className="card border p-4 rounded">
+        <div className='d-flex justify-content-between p-4 bg-primary text-white text-center rounded'>
+        <div class="rechare">
+          <p class="user-id">0</p>
+          <p class="other-info">Recharge</p>
+          </div>
+          <div class="rechare">
+          <p class="user-id">0</p>
+          <p class="other-info">Recharge</p>
+          </div>
+          <div class="rechare">
+          <p class="user-id">0</p>
+          <p class="other-info">Recharge</p>
+          </div>
+        </div>
+        <div className='content-product d-flex justify-content-between px-2 pt-3'>
+          <h6 className='text-muted'>Title</h6>
+          <p>aaaa</p>
+        </div>
+        <div className='content-product d-flex justify-content-between px-2'>
+          <h6 className='text-muted'>Price</h6>
+          <p>1000 Rs.</p>
+        </div>
+        <div className='content-product d-flex justify-content-between px-2'>
+          <h6 className='text-muted'>Coupon</h6>
+          <p>Select Coupon</p>
+        </div>
+        <div className='content-product d-flex justify-content-between px-2'>
+          <h6 className='text-muted'>Final Price</h6>
+          <p>1000 Rs.</p>
+        </div>
+      <div className='d-flex justify-content-between px-2'>
+        <button className='btn btn-light bg-light border px-5'>Clear</button>
+        <button className='btn btn-primary bg-primary border px-5'>Confirm</button>
+
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <div className="product-card d-none">
       <div className="product-image">
         <img className="products-image" src={product.image} alt={product.name} />
       </div>
@@ -38,7 +86,8 @@ const Product = ({ product }) => {
         <div className="col-auto">
           <Badge bg="success">New</Badge>
         </div>
-      </div>        <p>Category: <b>{product.category}</b></p>
+      </div>     
+         <p>Category: <b>{product.category}</b></p>
         <p>Category: <b>{product.category}</b></p>
         <p>Category: <b>{product.category}</b></p>
         <p>Price: <b>{product.price}</b></p>
@@ -53,7 +102,7 @@ const Product = ({ product }) => {
       </div>
 
     </div>
-
+    </>
   );
 };
 

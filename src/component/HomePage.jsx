@@ -44,28 +44,36 @@ export const HomePage = () => {
                 ))}
             </Slide>
         </div>
-        <div className='mobile-responsive'>
+      <div className="container py-4 mb-5">
+        <div className="row">
+            <div className="col-md-12">
+            <div className='mobile-responsive py-4'>
             <h3> About Us </h3>
-        <br/>
-        <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. <br/>  Explicabo exercitationem
-        esse quasi, iure ullam repellat <br/>itaque facere! Animi repellat cum quas <br/>Iste 
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.   Explicabo exercitationem
+        esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas Iste 
         esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas quisquam! Iste  
-        aperiam maxime quaerat est et veniam doloremque!<br/> 
+        aperiam maxime quaerat est et veniam doloremque!
         </p>
-        <br/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br/>  Explicabo exercitationem
-        esse quasi, iure ullam repellat <br/>itaque facere! Animi repellat cum quas <br/>Iste 
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.   Explicabo exercitationem
+        esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas Iste 
         esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas quisquam! Iste  
-        aperiam maxime quaerat est et veniam doloremque!<br/> 
+        aperiam maxime quaerat est et veniam doloremque!
         </p>
-        <br/>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br/>  Explicabo exercitationem
-        esse quasi, iure ullam repellat <br/>itaque facere! Animi repellat cum quas <br/>Iste 
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.   Explicabo exercitationem
+        esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas Iste 
         esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas quisquam! Iste  
-        aperiam maxime quaerat est et veniam doloremque!<br/> 
+        aperiam maxime quaerat est et veniam doloremque!
         </p>
-        <br/>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.   Explicabo exercitationem
+        esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas Iste 
+        esse quasi, iure ullam repellat itaque facere! Animi repellat cum quas quisquam! Iste  
+        aperiam maxime quaerat est et veniam doloremque!
+        </p>
+        
         </div>
+            </div>
+        </div>
+      </div>
            </> 
     )
 }
