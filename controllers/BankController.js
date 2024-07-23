@@ -1,19 +1,18 @@
 // controllers/userController.js
-const bcrypt = require('bcrypt');
-const fs = require('fs').promises;
-const path = require('path');
-const multer = require('multer');
+import * as fs from 'fs/promises';
+import path from 'path';
+import multer from 'multer';
+import bcrypt from 'bcrypt';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const UPLOADS_FOLDER = 'uploads'; // Folder where uploaded files will be stored
 
-const User = require('../models/User');
-const BankAccount = require('../models/BankAccount');
+import User from '../models/User.js'; // Ensure correct file path and extension
+import BankAccount from '../models/BankAccount.js'; // Ensure correct file path and extension
 
 // first product deactive  ??
 
-
-exports.addBankDetail = async (req, res) => {
+export const addBankDetail = async (req, res) => {
   try {
     console.log('addBankDetail')
     const { cardholder_name, bank_name, bank_account, ifsc_code, bank_mobile_number, withdraw_password } = req.body;
@@ -40,7 +39,7 @@ exports.addBankDetail = async (req, res) => {
   }
 };
 
-exports.addWithdraw_passwords = async (req, res) => {
+export const addWithdraw_passwords = async (req, res) => {
   try {
     const { product_title_id, title, price, validity_period, daily_income, total_revenue, total_return, purchase_limit, invitation_bonus, purchase_bonus, lucky_draw } = req.body;
 
@@ -88,8 +87,7 @@ exports.addWithdraw_passwords = async (req, res) => {
     res.status(500).json({ error: 'addProducts Internal server error' });
   }
 }
-
-exports.findProducts = async (req, res) => {
+export const findProducts = async (req, res) => {
   try {
     const { id } = req.params;
     console.log('id', id);
@@ -107,8 +105,7 @@ exports.findProducts = async (req, res) => {
   }
 }
 
-
-exports.getProducts = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
     // get products details also ??
     const { id } = req.params;
@@ -123,7 +120,7 @@ exports.getProducts = async (req, res) => {
   }
 }
 
-exports.allProduct = async (req, res) => {
+export const allProduct = async (req, res) => {
   try {
     // get products details also using relationship  ?? 
     const ProductTitle = await Product_title.findAll({ include: Products }); // Use findByPk to find by primary key
@@ -138,7 +135,7 @@ exports.allProduct = async (req, res) => {
   }
 }
 
-exports.createComment = async (req, res) => {
+export const createComment = async (req, res) => {
   try {
     const blog_id = req.params.blogId;
     const { comment } = req.body;
@@ -161,7 +158,7 @@ exports.createComment = async (req, res) => {
   }
 }
 
-exports.listComment = async (req, res) => {
+export const listComment = async (req, res) => {
   try {
     const Comments = await Comment.findAll({ where: { blog_id: req.params.blogId } });
     res.json(Comments);

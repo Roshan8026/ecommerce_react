@@ -1,8 +1,8 @@
 // models/Blog.js
 
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User  = require('./User');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
+import User from './User.js';
 
 const Comment = sequelize.define('comments', {
     comment: {
@@ -24,4 +24,4 @@ const Comment = sequelize.define('comments', {
 });
 
 
-module.exports = Comment;
+export default Comment;

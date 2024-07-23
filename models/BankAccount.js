@@ -1,10 +1,9 @@
 // models/Blog.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
+import User from './User.js';
 
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./User');
-
-const products = sequelize.define('bank_accounts', {
+const bankAccount = sequelize.define('bank_accounts', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -47,4 +46,4 @@ const products = sequelize.define('bank_accounts', {
 // Blog.belongsTo(User, { foreignKey: 'userId' });
 
 
-module.exports = products;
+export default bankAccount;

@@ -1,38 +1,50 @@
 // server.js
+import Razorpay from 'razorpay';
+import { checkout, paymentVerification } from './controllers/paymentController.js';
+import express from 'express';
+import { Op } from 'sequelize';
+import sequelize from './config/database.js';
+import jwt from 'jsonwebtoken';
+import multer from 'multer';
+// import User from './models/User.js';
+// import Blog from './models/Blog.js'; // You can uncomment this if needed
+import * as authController from './controllers/authController.js';
+import  * as userController from './controllers/userController.js';
+import  * as productController from './controllers/productController.js';
+import path from 'path';
+import nodemailer from 'nodemailer';
+import * as BankController from './controllers/BankController.js';
 
-const express = require('express');
-const { Op } = require('sequelize');
-const sequelize = require('./config/database');
-const jwt = require('jsonwebtoken');
-const multer = require('multer');
-const User = require('./models/User');
-// const Blog = require('./models/Blog');
-const authController = require('./controllers/authController');
-const userController = require('./controllers/userController');
-const productController = require('./controllers/productController');
-const path = require('path');
-const nodemailer = require("nodemailer");
-const BankController = require('./controllers/BankController');
+// Load environment variables from .env file
+import { config as dotenvConfig } from 'dotenv';
+dotenvConfig();
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const cors = require("cors")
+const PORT = process.env.PORT || 3000;
 
-app.use(cors({
-  credentials: true
-}));
 app.use(express.json());
 
 // Synchronize models with the database
 sequelize.sync()
   .then(() => {
+    console.log('check object RAZORPAY_API_KEY', process.env.RAZORPAY_API_KEY)
+    console.log('check object RAZORPAY_APT_SECRET', process.env.RAZORPAY_APT_SECRET)
     console.log('Models synchronized with the database');
   })
   .catch((error) => {
     console.error('Failed to synchronize models:', error);
   });
 
+const instance = new Razorpay({
+  key_id: process.env.RAZORPAY_API_KEY,
+  key_secret: process.env.RAZORPAY_APT_SECRET,
+});
 
+export default instance; 
 
 // Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
@@ -57,52 +69,26 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Configure multer for handling form data
 const upload = multer();
 
-//checking node js 
-app.get('test', authController.test);
-
 // Registration route
 app.post('/api/send-otp', authController.send_otp);
-app.get('/api/verify_otp',authController.verify_otp);
+app.get('/api/verify_otp', authController.verify_otp);
 app.post('/api/register', upload.none(), authController.register);
 app.post('/api/login', upload.none(), authController.login);
 app.post('/api/reset_password', authController.reset_password);
 
 // all route
-app.post('/api/product-title',verifyToken,  upload.none(), productController.addProductTitle);
-app.post('/api/product-add',verifyToken, upload.single('file'), productController.addProducts);
+app.post('/api/product-title', verifyToken, upload.none(), productController.addProductTitle);
+app.post('/api/product-add', verifyToken, upload.single('file'), productController.addProducts);
 app.get('/api/product_details/:id', verifyToken, productController.findProducts);
 app.get('/api/all_title_products', verifyToken, productController.allProduct);
-app.post('/api/bank-add', verifyToken, upload.none(), BankController.addBankDetail)
-
-// Login route
+app.post('/api/bank-add', verifyToken, upload.none(), BankController.addBankDetail);
+app.post('/api/payment_checkout', verifyToken, upload.none(), checkout);
+app.post('/api/payment_paymentverification', verifyToken, upload.none(), BankController.addBankDetail);
 
 // User route
 app.get('/users', verifyToken, userController.getUser);
 
-//Crud Operation performe on BlogPosts
-
-// app.get('/post', verifyToken, userController.getBlog);
-
-// app.post('/post', verifyToken, upload.none(), userController.postBlog);
-
-
-// app.put('/posts/:id', verifyToken, upload.none(), userController.updateBlog);
-
-
-// app.delete('/posts/:id', verifyToken, userController.deleteBlog);
-
-
-// // comments
-
-// app.post('/posts/:blogId/comments', verifyToken, upload.none(), userController.createComment);
-
-// //List comment for specific blog
-
-// app.get('/posts/:blogId', verifyToken, userController.listComment);
-
-
-
-app.listen(3000, () => {
+app.listen(PORT, () => {
   // const transporter = nodemailer.createTransport({
   //   service: "Gmail",
   //   host: "smtp.gmail.com",
@@ -126,5 +112,5 @@ app.listen(3000, () => {
   //     console.log("Email sent: ", info.response);
   //   }
   // });
-  console.log('Server running on port 3000');
+  console.log(`Server running on port ${PORT}`);
 });

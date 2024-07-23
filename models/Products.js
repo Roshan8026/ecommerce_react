@@ -1,7 +1,7 @@
 
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const Product_title = require('./Product_title');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
+import Product_title from './Product_title.js';
 
 const products = sequelize.define('products', {
   id: {
@@ -62,4 +62,4 @@ const products = sequelize.define('products', {
 products.belongsTo(Product_title, { foreignKey: 'product_title_id' });
 
 
-module.exports = products;
+export default products;

@@ -1,8 +1,7 @@
 // models/User.js
-
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const Blog = require('./Product_title');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
+import Blog from './Product_title.js';
 
 const User = sequelize.define('User', {
   id: {
@@ -39,4 +38,4 @@ const User = sequelize.define('User', {
 
 User.hasMany(Blog, { foreignKey: 'userId' });
 
-module.exports = User;
+export default User;

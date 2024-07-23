@@ -1,11 +1,11 @@
 // controllers/userController.js
 
-const User = require('../models/User');
+import User from '../models/User.js'; // Ensure correct file path and extension
 // const Blog    = require('../models/Blog');
-const Comment = require('../models/Comment');
+import Comment from '../models/Comment.js';
 
 
-exports.getUser = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     const users = await User.findAll();
     res.json(users);

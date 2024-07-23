@@ -1,13 +1,13 @@
 // controllers/authController.js
 
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const bcrypt = require('bcrypt');
-const axios = require('axios');
-const unirest = require("unirest");
-const nodemailer = require("nodemailer");
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js'; // Ensure correct file path and extension
+import bcrypt from 'bcrypt';
+const axios = 'axios';
+const unirest = "unirest";
+const nodemailer = "nodemailer";
 
-exports.test = async (req, res) => {
+export const test = async (req, res) => {
   return res.status(200).json({ message: 'This is url is working ' });
 
 }
@@ -24,8 +24,7 @@ function generateInvitationCode(length) {
 }
 
 // console.log(generateInvitationCode(6));
-
-exports.send_otp = async (req, res) => {
+export const send_otp = async (req, res) => {
   try {
     const mobileNumber = req.body.mobileNumber;
     console.log('mobileNumber', mobileNumber);
@@ -67,7 +66,7 @@ exports.send_otp = async (req, res) => {
   }
 }
 
-exports.verify_otp = async (req, res) => {
+export const verify_otp = async (req, res) => {
   const { email, otp } = req.body;
   let key = req.body.key ?? null;
 
@@ -89,8 +88,7 @@ exports.verify_otp = async (req, res) => {
       }
     }
 }
-
-exports.reset_password = async (req, res) => {
+export const reset_password = async (req, res) => {
   const { email, password } = req.body;
   const existingUser = await User.findOne({ where: { email } });
     if (!existingUser) {
@@ -110,7 +108,7 @@ exports.reset_password = async (req, res) => {
 }
 
 // Registration controller
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -142,7 +140,7 @@ exports.register = async (req, res) => {
 };
 
 // Login controller
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 

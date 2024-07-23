@@ -1,20 +1,17 @@
 // controllers/userController.js
 
-const fs = require('fs').promises;
-const path = require('path');
-const multer = require('multer');
-
+import * as fs from 'fs/promises';
+import path from 'path';
+import multer from 'multer';
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const UPLOADS_FOLDER = 'uploads'; // Folder where uploaded files will be stored
-
-const User = require('../models/User');
-const Product_title = require('../models/Product_title');
-const Products = require('../models/Products');
+import User from '../models/User.js'; // Ensure correct file path and extension
+import Product_title from '../models/Product_title.js'; // Ensure correct file path and extension
+import Products from '../models/Products.js'; // Ensure correct file path and extension
 
 // first product deactive  ??
 
-
-exports.addProductTitle = async (req, res) => {
+export const addProductTitle = async (req, res) => {
   try {
     const { title } = req.body;
     const Product_titles = await Product_title.create({ title: title, active: 0 });
@@ -24,7 +21,7 @@ exports.addProductTitle = async (req, res) => {
   }
 };
 
-exports.addProducts = async (req, res) => {
+export const addProducts = async (req, res) => {
   try {
     const { product_title_id, title, price, validity_period, daily_income, total_revenue, total_return, purchase_limit, invitation_bonus, purchase_bonus, lucky_draw } = req.body;
 
@@ -72,8 +69,7 @@ exports.addProducts = async (req, res) => {
     res.status(500).json({ error: 'addProducts Internal server error' });
   }
 }
-
-exports.findProducts = async (req, res) => {
+export const findProducts = async (req, res) => {
   try {
     const { id } = req.params;
     console.log('id', id);
@@ -91,8 +87,7 @@ exports.findProducts = async (req, res) => {
   }
 }
 
-
-exports.getProducts = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
     // get products details also ??
     const { id } = req.params;
@@ -106,8 +101,7 @@ exports.getProducts = async (req, res) => {
     res.status(500).json({ message: 'Error occurred while updating the post' });
   }
 }
-
-exports.allProduct = async (req, res) => {
+export const allProduct = async (req, res) => {
   try {
     // get products details also using relationship  ?? 
     // const ProductTitle = await Product_title.findAll(); // Use findByPk to find by primary key
@@ -130,35 +124,35 @@ exports.allProduct = async (req, res) => {
   }
 }
 
-exports.createComment = async (req, res) => {
-  try {
-    const blog_id = req.params.blogId;
-    const { comment } = req.body;
+// exports.createComment = async (req, res) => {
+//   try {
+//     const blog_id = req.params.blogId;
+//     const { comment } = req.body;
 
-    if (comment == null) {
-      res.status(500).json({ error: 'comment is cannot be null' });
-    }
+//     if (comment == null) {
+//       res.status(500).json({ error: 'comment is cannot be null' });
+//     }
 
-    // Create the comment
-    const blog_comment = await Comment.create({
-      comment,
-      blog_id,
-      userId: req.userId,
-    });
+//     // Create the comment
+//     const blog_comment = await Comment.create({
+//       comment,
+//       blog_id,
+//       userId: req.userId,
+//     });
 
-    res.status(201).json(blog_comment);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred while creating the comment.' });
-  }
-}
+//     res.status(201).json(blog_comment);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'An error occurred while creating the comment.' });
+//   }
+// }
 
-exports.listComment = async (req, res) => {
-  try {
-    const Comments = await Comment.findAll({ where: { blog_id: req.params.blogId } });
-    res.json(Comments);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error occurred while fetching comments' });
-  }
-}
+// exports.listComment = async (req, res) => {
+//   try {
+//     const Comments = await Comment.findAll({ where: { blog_id: req.params.blogId } });
+//     res.json(Comments);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Error occurred while fetching comments' });
+//   }
+// }
