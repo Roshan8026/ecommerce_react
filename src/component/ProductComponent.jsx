@@ -29,7 +29,8 @@ const Product = ({ product }) => {
 
 
 <>
-<div className="container">
+    {/* This is Modal for code  future*/}
+<div className="container d-none">
   <div className="row ">
     <div className="col-md-4">
       <div className="card border p-4 rounded">
@@ -74,7 +75,7 @@ const Product = ({ product }) => {
 </div>
 
     
-    <div className="product-card d-none">
+    <div className="product-card">
       <div className="product-image">
         <img className="products-image" src={product.image} alt={product.name} />
       </div>

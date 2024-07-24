@@ -53,6 +53,10 @@ const productsData = [
           <Route path='/transaction' element={<Transaction />} />
           <Route path='/orders' element={<Order />} />
           <Route path='/withdraw' element={<WithDraw />} />
+          {/* Will comment in future used for temporary */}
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
         </Routes>
         </div>
       </Router>
