@@ -4,16 +4,21 @@ import { Button ,Badge} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
 // Sample data for products and categories
+// const productsData = [
+//   { id: 1, name: "Product 1", category: "Category A", price: "$10", image: "https://via.placeholder.com/150" },
+//   { id: 2, name: "Product 2", category: "Category A", price: "$15", image: "https://via.placeholder.com/150" },
+//   { id: 3, name: "Product 3", category: "Category B", price: "$20", image: "https://via.placeholder.com/150" },
+//   { id: 4, name: "Product 4", category: "Category B", price: "$25", image: "https://via.placeholder.com/150" },
+//   { id: 5, name: "Product 5", category: "Category C", price: "$30", image: "https://via.placeholder.com/150" },
+//   { id: 6, name: "Product 6", category: "Category D", price: "$35", image: "https://via.placeholder.com/150" }, // Added product for Category D
+//   { id: 7, name: "Product 7", category: "Category D", price: "$40", image: "https://via.placeholder.com/150" }, // Added product for Category D
+//   { id: 8, name: "Product 8", category: "Category E", price: "$45", image: "https://via.placeholder.com/150" }, // Added product for Category E
+//   { id: 9, name: "Product 9", category: "Category E", price: "$50", image: "https://via.placeholder.com/150" }, // Added product for Category E
+// ];
+
 const productsData = [
-  { id: 1, name: "Product 1", category: "Category A", price: "$10", image: "https://via.placeholder.com/150" },
-  { id: 2, name: "Product 2", category: "Category A", price: "$15", image: "https://via.placeholder.com/150" },
-  { id: 3, name: "Product 3", category: "Category B", price: "$20", image: "https://via.placeholder.com/150" },
-  { id: 4, name: "Product 4", category: "Category B", price: "$25", image: "https://via.placeholder.com/150" },
-  { id: 5, name: "Product 5", category: "Category C", price: "$30", image: "https://via.placeholder.com/150" },
-  { id: 6, name: "Product 6", category: "Category D", price: "$35", image: "https://via.placeholder.com/150" }, // Added product for Category D
-  { id: 7, name: "Product 7", category: "Category D", price: "$40", image: "https://via.placeholder.com/150" }, // Added product for Category D
-  { id: 8, name: "Product 8", category: "Category E", price: "$45", image: "https://via.placeholder.com/150" }, // Added product for Category E
-  { id: 9, name: "Product 9", category: "Category E", price: "$50", image: "https://via.placeholder.com/150" }, // Added product for Category E
+  { id: 1, title: "SHAKER", category: "Category Protein", price: "₹600", validity_period: "35", daily_income: "39.77", total_revenue: "230", total_return: "1392", image: "https://via.placeholder.com/150" },
+   { id: 2, title: "PROTEIN 250 GMS", category: "Category Protein", price: "₹3600", validity_period: "44", daily_income: "220.45", total_revenue: "8820", total_return: "8820", image: "https://via.placeholder.com/150" }
 ];
 
 const categories = Array.from(new Set(productsData.map(product => product.category)));
@@ -82,15 +87,15 @@ const Product = ({ product }) => {
       <div className="product-details">
       <div className="row">
         <div className="col product-name">
-          <h3>{product.name}</h3>
+          <h3>{product.title}</h3>
         </div>
         <div className="col-auto">
           <Badge bg="success">New</Badge>
         </div>
       </div>     
-         <p>Category: <b>{product.category}</b></p>
-        <p>Category: <b>{product.category}</b></p>
-        <p>Category: <b>{product.category}</b></p>
+         <p>Daily Income: <b>{product.daily_income}</b></p>
+        <p>Validity period: <b>{product.validity_period} Days</b></p>
+        <p>Total Income: <b>{product.total_return}</b></p>
         <p>Price: <b>{product.price}</b></p>
         <Button
           variant="danger"
