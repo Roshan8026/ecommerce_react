@@ -101,15 +101,30 @@
   }
 
   .user-box{
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     border-radius: 10px;
     
   }
 
   .text-container{
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    padding: 20px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    padding: 20px 8px;
     margin-bottom: 10px;
     margin-top: 20px;
 
+  }
+
+  .user-top-section p{
+    font-size: 14px;
+    margin-left: 10px;
+  }
+
+  .user-card{
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    padding: 20px 0;
+  }
+
+  .men{
+    font-size: 40px;
+    margin-right: 10px;
   }

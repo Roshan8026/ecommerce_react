@@ -1,6 +1,6 @@
 .button-row-container {
     display: flex;
-    justify-content: space-around; /* Distribute buttons evenly */
+    justify-content: space-between; /* Distribute buttons evenly */
     text-align: center;
   }
   

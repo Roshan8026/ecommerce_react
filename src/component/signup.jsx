@@ -40,9 +40,74 @@ const SignupPage = () => {
     return (
         <div>
             <Navbar bg="primary" variant="dark" className="fixed-top">
-                <Navbar.Brand href="#">PC Health App</Navbar.Brand>
+                <Navbar.Brand href="#"className='px-4'>PC Health App</Navbar.Brand>
             </Navbar>
-            <Container className="signup-container">
+
+
+            <div className="container mt-5 pt-4">
+    <div className="row">
+        <div className="col-12">
+        <Card className="signup-card">
+                            <Card.Body>
+                                <h2 className="visually-hidden"> New Account </h2>
+                                <h2 style={{fontWeight: 'bold'}}> New Account </h2>
+                                <h5 style={{marginBottom: '20px'}}>Sign Up For Free, Now </h5>
+                                <Form>
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Form.Control type="number" placeholder="Please Enter Mobile Number" className="form-control" />
+                                        </Col>
+                                        {/* <Col>
+                                            <Form.Control type="text" placeholder="Last Name" className="form-control" />
+                                        </Col> */}
+                                    </Row>
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Form.Control type="password" placeholder="Please input Password " className="form-control" />
+                                        </Col>
+                                    </Row>
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Form.Control type="password" placeholder="Please enter password again" className="form-control" />
+                                        </Col>
+                                    </Row>
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Form.Control type="text" placeholder="Please enter invitation code" className="form-control" />
+                                        </Col>
+                                    </Row>
+                                    <Row className="mb-3">
+                                        <Col xs={8}>
+                                            <Form.Control type="text" placeholder="Verification Code" className="form-control" />
+                                        </Col>
+                                        <Col xs={4}>
+                                            <Button variant="primary" type="submit"
+                                            disabled={countdown > 0} // Disable button while countdown is active
+                                            onClick={handleSendClick}
+                                            className="btn-send" style={{ height: "73%" }}>
+                                                 {sendButtonText}
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            <Button variant="primary" type="submit" className="btn-signup">
+                                                Sign Up
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                    <p>Already have account ? login now  <NavLink to={"/login"} className="nav-link bottom-nav-link" style={{ color: "blue",fontWeight: 'bold',
+                                TextDecoration: 'underline' }}>Log in</NavLink> </p>
+                                </Form>
+                            </Card.Body>
+                        </Card>
+        </div>
+    </div>
+       </div>
+
+
+
+            <Container className="signup-container d-none">
                 <Row className="justify-content-center">
                     <Col xs={12} md={6}>
                         <Card className="signup-card">

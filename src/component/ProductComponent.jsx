@@ -10,10 +10,10 @@ const productsData = [
   { id: 3, name: "Product 3", category: "Category B", price: "$20", image: "https://via.placeholder.com/150" },
   { id: 4, name: "Product 4", category: "Category B", price: "$25", image: "https://via.placeholder.com/150" },
   { id: 5, name: "Product 5", category: "Category C", price: "$30", image: "https://via.placeholder.com/150" },
-  { id: 6, name: "Product 6", category: "Category D", price: "$35", image: "https://via.placeholder.com/150" }, // Added product for Category D
-  { id: 7, name: "Product 7", category: "Category D", price: "$40", image: "https://via.placeholder.com/150" }, // Added product for Category D
-  { id: 8, name: "Product 8", category: "Category E", price: "$45", image: "https://via.placeholder.com/150" }, // Added product for Category E
-  { id: 9, name: "Product 9", category: "Category E", price: "$50", image: "https://via.placeholder.com/150" }, // Added product for Category E
+  { id: 6, name: "Product 6", category: "Category D", price: "$35", image: "https://via.placeholder.com/150" }, 
+  { id: 7, name: "Product 7", category: "Category D", price: "$40", image: "https://via.placeholder.com/150" }, 
+  { id: 8, name: "Product 8", category: "Category E", price: "$45", image: "https://via.placeholder.com/150" }, 
+  { id: 9, name: "Product 9", category: "Category E", price: "$50", image: "https://via.placeholder.com/150" },
 ];
 
 const categories = Array.from(new Set(productsData.map(product => product.category)));
@@ -29,7 +29,7 @@ const Product = ({ product }) => {
 
 
 <>
-<div className="container">
+<div className="container d-none">
   <div className="row ">
     <div className="col-md-4">
       <div className="card border p-4 rounded">
@@ -74,7 +74,7 @@ const Product = ({ product }) => {
 </div>
 
     
-    <div className="product-card d-none">
+    <div className="product-card ">
       <div className="product-image">
         <img className="products-image" src={product.image} alt={product.name} />
       </div>

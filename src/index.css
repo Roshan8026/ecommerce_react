@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #e9e2e2 !important; 
+  background: #0d6efd !important;
+}
+
+.vr {
+  margin-top: 45px;
+  height: 50px;
+}
+
+.user-top-section{
+  
+}
