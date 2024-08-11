@@ -3,9 +3,10 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js'; // Ensure correct file path and extension
 import bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer';
+
 const axios = 'axios';
 const unirest = "unirest";
-const nodemailer = "nodemailer";
 
 export const test = async (req, res) => {
   return res.status(200).json({ message: 'This is url is working ' });
@@ -75,6 +76,7 @@ export const verify_otp = async (req, res) => {
       return res.status(400).json({ error: 'Invalid Email Id' });
     } else {
       console.log('existingUser', existingUser?.dataValues.otp);
+      console.log('test existinguser',(existingUser?.dataValues.otp == otp));
       if(existingUser?.dataValues.otp == otp) {
         // Update the active column
         await User.update({ active: true }, { where: { email } });
@@ -113,14 +115,14 @@ export const register = async (req, res) => {
     const { email, password } = req.body;
 
     const otp = Math.floor(100000 + Math.random() * 900000);
-    let message = "This is a test email sent using Testing. This is your otp" + otp;
+    let message = "This is a test email sent using Testing. This is your otp " + otp;
     let subject = "Hello from Protein";
 
     await sendOtp(email,message,subject)
     // Check if the user with the given email already exists
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: 'email Number already exists' });
+      return res.status(400).json({ error: 'email address already exists' });
     }
 
     // Hash the password

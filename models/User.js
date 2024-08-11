@@ -34,6 +34,11 @@ const User = sequelize.define('User', {
     type: DataTypes.BOOLEAN,
     allowNull: false
   }
+  }, {
+  // Enable timestamps
+  timestamps: true,
+  // Use underscored format for column names (e.g., created_at, updated_at)
+  // underscored: true,
 });
 
 User.hasMany(Blog, { foreignKey: 'userId' });
