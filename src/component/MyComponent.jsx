@@ -169,7 +169,7 @@ const MyComponent = () => {
         </div>
 
         {/* new tab */}
-        <div>
+        <div className="mb-5 pb-5">
       {data.map((item, index) => (
         <div key={index} className="d-flex justify-content-between px-4 mt-4">
           <div onClick={() => toggleAccordion(item.id)}>
@@ -183,8 +183,8 @@ const MyComponent = () => {
             )}
         </div>
       ))}
-      <div className="text-center">
-          <button className="btn btn-primary mt-3 w-100 ">Log out</button>
+      <div className="text-center px-4">
+          <button className="btn btn-primary mt-3 w-100">Log out</button>
         </div>
     </div>
 
