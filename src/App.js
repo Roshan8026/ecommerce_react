@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 // import './App.css';
 
-import React , {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignupPage from './component/signup.jsx';
 import { HomePage } from './component/HomePage.jsx';
@@ -18,10 +18,63 @@ import ReferFriend from './component/ReferFriend.jsx';
 import Transaction from './component/Transaction.jsx';
 import Order from './component/Order.jsx';
 import WithDraw from './component/WithDraw.jsx';
+import api from './interceptor';
 
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Assuming initial state is not logged in
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   // Example API call to fetch users
+  //   api.get('/users')
+  //     .then(response => {
+  //       setData(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch(error => {
+  //       setError(error.message);
+  //       setLoading(false);
+  //     });
+  // }, []);
+ async  function check() {
+    try {
+      let email = "protein19910001@gmail.com";
+      let password = "1234567890";
+
+      const response = await api.post('/api/login', {
+        email,
+        password
+      })
+  
+        // Assuming the response contains a token
+        localStorage.setItem('token', response.data.token);
+        
+        // Redirect or do something after successful login
+        console.log('Login successful:', response.data);
+      } catch (error) {
+        setError('Login failed. Please check your credentials.');
+        console.error('Login error:', error);
+      }
+    };
+
+check();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  console.log('data list of user',data);
+  return (
+    <div>
+      <h1>Users:</h1>
+      <ul>
+        {data && data.map(user => (
+          <li key={user.id}>{user.name} - {user.email}</li>
+        ))}
+      </ul>
+    </div>
+  );
 
   // Sample data for products
 const productsData = [
