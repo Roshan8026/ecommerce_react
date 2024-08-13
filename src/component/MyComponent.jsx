@@ -25,12 +25,12 @@ import { FcBusinessman } from "react-icons/fc";
 
 // new tab code //////////////////////////////////////////////////////////////////
 const data = [
-  { icon: FaUser, text: 'My Order' },
-  { icon: GrTransaction, text: 'Transaction' },
-  { icon: IoIosMailOpen, text: 'Refer Friends' },
-  { icon: RiBankCardLine, text: 'My Bank Account' },
-  { icon: RiLockPasswordFill, text: 'Change Password' },
-  { icon: FaKey, text: 'WithDraw password' }
+  { id: 1, icon: FaUser,  isOpen: false, formType: "typeA", text: 'My Order' },
+  { id: 2, icon: GrTransaction, isOpen: false, formType: "typeB", text: 'Transaction' },
+  { id: 4, icon: IoIosMailOpen, isOpen: false, formType: "typeD", text: 'Refer Friends' },
+  { id: 5, icon: RiBankCardLine, isOpen: false, formType: "typeE", text: 'My Bank Account' },
+  { id: 6, icon: RiLockPasswordFill, isOpen: false, formType: "typeF", text: 'Change Password' },
+  { id: 7, icon: FaKey, isOpen: false, formType: "typeG", text: 'WithDraw password' }
 ];
 
 const MyComponent = () => {
@@ -169,18 +169,28 @@ const MyComponent = () => {
         </div>
 
         {/* new tab */}
-        <>
+        <div>
       {data.map((item, index) => (
         <div key={index} className="d-flex justify-content-between px-4 mt-4">
-          <div>
+          <div onClick={() => toggleAccordion(item.id)}>
             <item.icon className="user-icon" /> <span>{item.text}</span>
           </div>
           <IoIosArrowForward />
+           {item.isOpen && (
+              <div className="accordion-content">
+                {renderForm(item.formType)}
+              </div>
+            )}
         </div>
       ))}
-    </>
+      <div className="text-center">
+          <button className="btn btn-primary mt-3 w-100 ">Log out</button>
+        </div>
+    </div>
 
-        <div className="accordion mb-5 pb-5">
+        
+      {/* d-none not use */}
+        <div className="accordion mb-5 pb-5 d-none">
           {accordionItems.map((item) => (
             <div className="accordion-item" key={item.id}>
               <button
@@ -204,8 +214,8 @@ const MyComponent = () => {
           <button className="btn btn-primary mt-3 w-100 ">Log out</button>
         </div>
         </div>
-        
-      
+
+
       </div>
     </>
   );
