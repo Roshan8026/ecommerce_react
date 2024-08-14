@@ -1,11 +1,12 @@
 // server.js
 import Razorpay from 'razorpay';
-import { checkout, paymentVerification } from './controllers/paymentController.js';
+import {getkey, checkout, paymentVerification } from './controllers/paymentController.js';
 import express from 'express';
 import { Op } from 'sequelize';
 import sequelize from './config/database.js';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';
+import cors from 'cors';
 // import User from './models/User.js';
 // import Blog from './models/Blog.js'; // You can uncomment this if needed
 import * as authController from './controllers/authController.js';
@@ -24,9 +25,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// Use CORS middleware
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:3000', // Frontend URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+const PORT = process.env.PORT || 3002;
 
 app.use(express.json());
+
+
+
+app.use(cors(corsOptions));
 
 // Synchronize models with the database
 sequelize.sync()
@@ -87,6 +101,10 @@ app.post('/api/payment_paymentverification', verifyToken, upload.none(), BankCon
 
 // User route
 app.get('/users', verifyToken, userController.getUser);
+// payment integration
+app.get('/api/getkey', upload.none(), getkey);
+app.post('/api/checkout', upload.none(), checkout);
+app.post('/api/paymentverification', upload.none(), paymentVerification);
 
 app.listen(PORT, () => {
   // const transporter = nodemailer.createTransport({

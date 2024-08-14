@@ -1,6 +1,12 @@
 import instance from '../server.js'; // Import the default export
 import crypto from 'crypto';
-// const Payment = require("../models/paymentModel.js"); // Assuming you have a Payment model defined
+import Payment from '../models/Payment.js'; // Ensure correct file path and extension
+
+export const getkey = async (req, res) => {
+ res.status(200).json({
+    key: process.env.RAZORPAY_API_KEY 
+  });
+}
 
 export const checkout = async (req, res) => {
     const options = {
@@ -32,11 +38,11 @@ export const paymentVerification = async (req, res) => {
 
   if (isAuthentic) {
     // Database comes here
-    // await Payment.create({
-    //   razorpay_order_id,
-    //   razorpay_payment_id,
-    //   razorpay_signature,
-    // });
+    await Payment.create({
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    });
 
     res.redirect(
       `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
