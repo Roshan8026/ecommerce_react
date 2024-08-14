@@ -19,7 +19,7 @@ import Transaction from './component/Transaction.jsx';
 import Order from './component/Order.jsx';
 import WithDraw from './component/WithDraw.jsx';
 import api from './interceptor';
-
+import PaymentSuccess from './component/PaymentSuccess.jsx';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Assuming initial state is not logged in
@@ -60,21 +60,21 @@ const App = () => {
       }
     };
 
-check();
+// check();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  console.log('data list of user',data);
-  return (
-    <div>
-      <h1>Users:</h1>
-      <ul>
-        {data && data.map(user => (
-          <li key={user.id}>{user.name} - {user.email}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
+  // console.log('data list of user',data);
+  // return (
+  //   <div>
+  //     <h1>Users:</h1>
+  //     <ul>
+  //       {data && data.map(user => (
+  //         <li key={user.id}>{user.name} - {user.email}</li>
+  //       ))}
+  //     </ul>
+  //   </div>
+  // );
 
   // Sample data for products
 const productsData = [
@@ -97,6 +97,7 @@ const productsData = [
         <Routes>
           <Route path="/home" element={<HomePage />} />
           <Route path='/products' element={<ProductComponent />} />
+          <Route path='paymentsuccess' element={<PaymentSuccess />} />
           <Route path="/product-details/:id" element={<ProductDetails products={productsData} />} />
           <Route path='/my-components' element={<MyComponent />} />
           <Route path='/bank-account' element={<BankAccount />} />
