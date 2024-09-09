@@ -10,6 +10,8 @@ const SignupPage = () => {
     // Text for the send button
     const [sendButtonText, setSendButtonText] = useState('Send');
 
+    
+
       useEffect(() => {
         let intervalId;
 

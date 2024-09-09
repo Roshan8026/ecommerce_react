@@ -19,6 +19,7 @@ const ProductDetails = ({ products }) => {
     return <div>Product not found</div>;
   }
   const checkoutHandler = async (amount) => {
+    try {
 
         const { data: { key } } = await axios.get("http://www.localhost:3001/api/getkey")
 
@@ -56,6 +57,18 @@ const ProductDetails = ({ products }) => {
         };
         const razor = new window.Razorpay(options);
         razor.open();
+
+          razor.on('payment.success', function(response) {
+      console.log("Payment Success:", response);
+    });
+
+    razor.on('payment.error', function(response) {
+      console.error("Payment Failed:", response.error);
+    });
+
+  } catch (error) {
+    console.error("Error in checkoutHandler:", error);
+  }
     }
 
 

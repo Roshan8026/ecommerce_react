@@ -11,8 +11,8 @@ const api = axios.create({
 // Request interceptor to add the Authorization token if available
 api.interceptors.request.use(
   config => {
-    // const token = localStorage.getItem('token'); // Assuming you store the JWT token in localStorage
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyMzU3MTQxOCwiZXhwIjoxNzIzNTc1MDE4fQ.QyKV02cWFD0NQYtXsklncfelK_lby802xO8LLtPWbgY"
+    const token = localStorage.getItem('token'); // Assuming you store the JWT token in localStorage
+    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyMzU3MTQxOCwiZXhwIjoxNzIzNTc1MDE4fQ.QyKV02cWFD0NQYtXsklncfelK_lby802xO8LLtPWbgY"
     
     // Exclude specific routes from adding the token
     const excludedRoutes = ['/login', '/register', '/send-otp', '/verify_otp'];
