@@ -16,10 +16,15 @@ export const authenticationSlice = createSlice({
     },
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
+    },
+    restAuthentication: (state, action) => {
+      state.isLoggedIn = false;
+      state.loading = false;
+      state.user = null;      
     }
   },
 });
 
-export const { setUser, setLoading, setIsLoggedIn } = authenticationSlice.actions;
+export const { setUser, setLoading, setIsLoggedIn , restAuthentication } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;

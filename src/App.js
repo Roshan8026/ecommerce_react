@@ -19,16 +19,28 @@ import api from './interceptor';
 import PaymentSuccess from './component/PaymentSuccess.jsx';
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import {
+  setUser,
+  setIsLoggedIn,
+} from "./features/authenticationSlice.js";
+import { useDispatch } from "react-redux"; // Correct for dispatching Redux actions
 
 const App = () => {
   let isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  let user_loggedIn = localStorage.getItem('user_loggedIn');
 
   useEffect(() => {
     if(isLoggedIn) {
       navigate('/home');
     } else {
-      navigate('/login');
+      if(user_loggedIn) {
+         dispatch(setUser(JSON.parse(localStorage.getItem('user'))));
+         dispatch(setIsLoggedIn(true));
+      } else {
+        navigate('/login');
+      }
     }
   }, [isLoggedIn]);
 

@@ -8,7 +8,8 @@ import { IoIosMailOpen } from "react-icons/io";
 import { RiBankCardLine } from "react-icons/ri";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaKey } from "react-icons/fa";
-
+import { restAuthentication } from "../features/authenticationSlice";
+import { useDispatch } from "react-redux"; // Correct for dispatching Redux actions
 
 
 import {
@@ -34,6 +35,8 @@ const data = [
 ];
 
 const MyComponent = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
   const [accordionItems, setAccordionItems] = useState([
     { id: 1, title: "My Order", isOpen: false, formType: "typeA" },
     { id: 2, title: "Transaction", isOpen: false, formType: "typeB" },
@@ -42,7 +45,6 @@ const MyComponent = () => {
     { id: 6, title: "Change Password", isOpen: false, formType: "typeF" },
     { id: 7, title: "WithDraw password", isOpen: false, formType: "typeG" },
   ]);
-  const navigate = useNavigate();
 
   const toggleAccordion = (id) => {
     const updatedItems = accordionItems.map((item) =>
@@ -77,6 +79,12 @@ const MyComponent = () => {
         return null;
     }
   };
+
+  const handleLogOut = () => {
+      localStorage.clear();
+      dispatch(restAuthentication());
+      navigate("/login")
+  }
 
   return (
     <>
@@ -184,7 +192,7 @@ const MyComponent = () => {
         </div>
       ))}
       <div className="text-center px-4">
-          <button className="btn btn-primary mt-3 w-100">Log out</button>
+          <button className="btn btn-primary mt-3 w-100" onClick={handleLogOut}>Log out</button>
         </div>
     </div>
 
