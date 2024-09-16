@@ -31,6 +31,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       invitation_code: {
         type: Sequelize.STRING,
         allowNull: false,

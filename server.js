@@ -36,11 +36,11 @@ const corsOptions = {
 
 const PORT = process.env.PORT || 3002;
 
-app.use(express.json());
-
-
-
 app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 
 // Synchronize models with the database
 sequelize.sync()
@@ -85,7 +85,7 @@ const upload = multer();
 
 // Registration route
 app.post('/api/send-otp', authController.send_otp);
-app.get('/api/verify_otp', authController.verify_otp);
+app.post('/api/verify_otp', authController.verify_otp);
 app.post('/api/register', upload.none(), authController.register);
 app.post('/api/login', upload.none(), authController.login);
 app.post('/api/reset_password', authController.reset_password);
@@ -104,14 +104,14 @@ app.get('/users', verifyToken, userController.getUser);
 // payment integration
 app.get('/api/getkey', upload.none(), getkey);
 app.post('/api/checkout', upload.none(), checkout);
-app.post('/api/paymentverification', upload.none(), paymentVerification);
+app.post('/api/paymentverification', paymentVerification);
 
 app.listen(PORT, () => {
   // const transporter = nodemailer.createTransport({
-  //   service: "Gmail",
-  //   host: "smtp.gmail.com",
-  //   port: 465,
-  //   secure: true,
+    // service: "Gmail",
+    // host: "smtp.gmail.com",
+    // port: 465,
+    // secure: true,
   //   auth: {
   //     user: "protein19910001@gmail.com",
   //     pass: "fspzcgigiteouxkl",

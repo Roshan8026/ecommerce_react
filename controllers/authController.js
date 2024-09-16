@@ -112,29 +112,39 @@ export const reset_password = async (req, res) => {
 // Registration controller
 export const register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, invitationCode } = req.body;
 
     const otp = Math.floor(100000 + Math.random() * 900000);
     let message = "This is a test email sent using Testing. This is your otp " + otp;
     let subject = "Hello from Protein";
-
-    await sendOtp(email,message,subject)
+    
     // Check if the user with the given email already exists
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: 'email address already exists' });
+      await sendOtp(email,message,subject)
+      // Update OTP field
+      await existingUser.update({ otp });
+      return res.status(200).json({ message: 'email address already exists ' });
     }
-
+    await sendOtp(email,message,subject)
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create the user
-    const user = await User.create({ email: email, password: hashedPassword, role: 'client', invitation_code: generateInvitationCode(6), active: 0, otp:otp});
+    
+    let user;
+    // parentUser 
+    if(invitationCode) {
+      const ParentUser = await User.findOne({ where: { invitation_code: invitationCode } });
+      // Create the user
+      user = await User.create({ email: email, password: hashedPassword, role: 'client',userId:ParentUser.id, invitation_code: generateInvitationCode(6), active: 0, otp:otp});
+    } else {
+      // Create the user
+      user = await User.create({ email: email, password: hashedPassword, role: 'client', invitation_code: generateInvitationCode(6), active: 0, otp:otp});
+    }
 
     // Generate a JWT token
     const token = jwt.sign({ userId: user.id }, 'secret-key', { expiresIn: '1h' });
 
-    res.status(200).json({ "token": token, 'success': "Registered Successfully" });
+    res.status(200).json({ "token": token, message : "Registered Successfully" });
   } catch (error) {
     console.error('Registration failed:', error);
     res.status(500).json({ error: 'Registration failed' });

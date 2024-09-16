@@ -25,12 +25,16 @@ export const checkout = async (req, res) => {
 };
 
 export const paymentVerification = async (req, res) => {
+  // console.log('req',req);
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-
+  console.log("Order ID:", razorpay_order_id);
+  console.log("Payment ID:", razorpay_payment_id);
+  console.log("Signature:", razorpay_signature);
+  
   const body = razorpay_order_id + "|" + razorpay_payment_id;
 
   const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_APT_SECRET)
+    .createHmac("sha256", "NtwTXA9TR72C1QyFrnmFCJRs")
     .update(body.toString())
     .digest("hex");
 

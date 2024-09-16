@@ -21,6 +21,10 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
   invitation_code: {
     type: DataTypes.STRING,
     allowNull: false,
