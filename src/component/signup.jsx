@@ -12,9 +12,10 @@ import "./SignupPage.css";
 import { NavLink } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+      const navigate = useNavigate();
   // State to manage the countdown timer for the Send button
   const [countdown, setCountdown] = useState(0);
   const [sendButtonText, setSendButtonText] = useState("Send");
@@ -48,13 +49,13 @@ const SignupPage = () => {
 
   const handleSendClick = async () => {
       if(email == '' || email == null) {
-          alert("please enter email");
+          toast.error("please enter email");
           return;
       }
      // Validate password match
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
+        toast.error("Passwords do not match");
+        return;
     }
 
     if (countdown === 0) {
@@ -106,6 +107,9 @@ const SignupPage = () => {
 
     if (signupResponse.status === 200) {
         toast.success('verification is successfully Please login');
+        setTimeout(() => {
+            navigate('/login');
+        },2000)
     } else {
         toast.success("Signup failed");
       setIsSignupButtonDisabled(false);
