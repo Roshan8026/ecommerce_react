@@ -6,7 +6,9 @@ Second Step npm install
 
 Third Step  configure database
 
-Fourth Step sequelize db:migrate 
+Fourth Step package.json's module type change to commonjs then follow fifth after migrate you can change to module
+
+Fifth Step sequelize db:migrate 
 
 # Run server
 
