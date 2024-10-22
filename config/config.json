@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "",
+    "password": "Anusha@123",
     "database": "ecommerce_node",
     "host": "127.0.0.1",
     "dialect": "mysql"

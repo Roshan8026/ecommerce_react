@@ -91,13 +91,21 @@ app.post('/api/login', upload.none(), authController.login);
 app.post('/api/reset_password', authController.reset_password);
 
 // all route
-app.post('/api/product-title', verifyToken, upload.none(), productController.addProductTitle);
-app.post('/api/product-add', verifyToken, upload.single('file'), productController.addProducts);
-app.get('/api/product_details/:id', verifyToken, productController.findProducts);
-app.get('/api/all_title_products', verifyToken, productController.allProduct);
+app.post('/api/product-title', upload.none(), productController.addProductTitle);
+// app.post('/api/product-title', verifyToken, upload.none(), productController.addProductTitle);
+// app.post('/api/product-add', verifyToken, upload.single('file'), productController.addProducts);
+app.post('/api/product-add', upload.single('file'), productController.addProducts);
+
+// app.get('/api/product_details/:id', verifyToken, productController.findProducts);
+app.get('/api/product_details/:id', productController.findProducts);
+// app.get('/api/all_title_products', verifyToken, productController.allProduct);
+app.get('/api/all_title_products', productController.allProduct);
 app.post('/api/bank-add', verifyToken, upload.none(), BankController.addBankDetail);
 app.post('/api/payment_checkout', verifyToken, upload.none(), checkout);
 app.post('/api/payment_paymentverification', verifyToken, upload.none(), BankController.addBankDetail);
+
+router.post('/api/myDetails', myDetailsController.createMyDetails);
+router.get('/api/myDetails', myDetailsController.getAllMyDetails);
 
 // User route
 app.get('/users', verifyToken, userController.getUser);
