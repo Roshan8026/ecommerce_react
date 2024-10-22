@@ -24,7 +24,65 @@ const Order = () => {
       className="mb-5 "
       fill
     >
-      <Tab eventKey="home" title="Other" >
+      <Tab eventKey="home" title="My Order" >
+      <Table striped bordered
+      >
+      <thead>
+        <tr>
+          <th>Sr No</th>
+          <th>Product Name</th>
+          <th>Daily Amount</th>
+          <th>Validity (In Days)</th>
+          <th>Withdraw Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+          <td><Button variant="danger">
+              Withdraw
+            </Button>
+          </td>
+        </tr>
+        
+      </tbody>
+    </Table>
+      </Tab>
+      {/* <Tab eventKey="profile" title="Recharge">
+      <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td colSpan={2}>Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </Table>
+      </Tab> */}
+      {/* <Tab eventKey="longer-tab" title="withdraw">
       <Table striped bordered hover>
       <thead>
         <tr>
@@ -55,69 +113,7 @@ const Order = () => {
       </tbody>
     </Table>
       </Tab>
-      <Tab eventKey="profile" title="Recharge">
-      <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-      </Tab>
-      <Tab eventKey="longer-tab" title="withdraw">
-      <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-      </Tab>
-    
+     */}
     </Tabs>
           
             </div>
@@ -133,14 +129,14 @@ const Order = () => {
                             <Card.Body>
                                 <div className="button-row-container">
                                     <Button variant="primary" type="submit" className="btn-signup">
-                                    other
+                                    My Order
                                     </Button>
-                                    <Button variant="primary" type="submit" className="btn-signup">
+                                    {/* <Button variant="primary" type="submit" className="btn-signup">
                                         Recharge
                                     </Button>
                                     <Button variant="primary" type="submit" className="btn-signup">
                                         Withdraw
-                                    </Button>
+                                    </Button> */}
                                 </div>
                             </Card.Body>
                         </Card>

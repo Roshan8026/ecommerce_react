@@ -44,12 +44,12 @@ const App = () => {
     }
   }, [isLoggedIn]);
 
-  const productsData = [
-    { id: 1, name: "Product 1", category: "Category A", price: "$10", image: "https://via.placeholder.com/150" },
-    { id: 2, name: "Product 2", category: "Category A", price: "$15", image: "https://via.placeholder.com/150" },
-    { id: 3, name: "Product 3", category: "Category B", price: "$20", image: "https://via.placeholder.com/150" },
-    // Add more products here...
-  ];
+  // const productsData = [
+  //   { id: 1, name: "Product 1", category: "Category A", price: "$10", image: "https://via.placeholder.com/150" },
+  //   { id: 2, name: "Product 2", category: "Category A", price: "$15", image: "https://via.placeholder.com/150" },
+  //   { id: 3, name: "Product 3", category: "Category B", price: "$20", image: "https://via.placeholder.com/150" },
+  //   // Add more products here...
+  // ];
 
   return (
     <div className="route-container">
@@ -60,7 +60,8 @@ const App = () => {
             <Route path="/home" element={<HomePage />} />
             <Route path="/products" element={<ProductComponent />} />
             <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-            <Route path="/product-details/:id" element={<ProductDetails products={productsData} />} />
+            {/* <Route path="/product-details/:id" element={<ProductDetails products={productsData} />} /> */}
+            <Route path="/product-details/:id" element={<ProductDetails/>} />
             <Route path="/my-components" element={<MyComponent />} />
             <Route path="/bank-account" element={<BankAccount />} />
             <Route path="/change-password" element={<ChangePassword />} />

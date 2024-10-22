@@ -79,7 +79,7 @@ const ChangePassword = () => {
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="againPassword">
-                                <Form.Label>Again Password</Form.Label>
+                                <Form.Label>Re-enter Password</Form.Label>
                                 <Form.Control 
                                     type="text" 
                                     placeholder="Please enter new Password Again" 

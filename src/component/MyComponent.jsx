@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaUser, FaAngleRight } from "react-icons/fa";
 import "./MyComponent.css";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { GrTransaction } from "react-icons/gr";
 import { IoIosMailOpen } from "react-icons/io";
@@ -22,6 +22,9 @@ import {
   Button,
 } from "react-bootstrap";
 import { FcBusinessman } from "react-icons/fc";
+
+let username = JSON.parse(localStorage.getItem('user'));
+username = username.user.email.split("@",1);
 
 
 // new tab code //////////////////////////////////////////////////////////////////
@@ -104,8 +107,8 @@ const MyComponent = () => {
    
     <FcBusinessman className="men"/>
     <div>
-             <p className="user-id">78788</p>
-             <p className="other-info text-danger">444</p>
+             <p className="user-id">{username}</p>
+             {/* <p className="other-info text-danger">444</p> */}
              </div>
            </div>
             <div className="d-flex justify-content-around mt-3 text-center">
@@ -115,7 +118,7 @@ const MyComponent = () => {
                 </div>
                 <div>
                   <p className="user-id">0</p>
-                  <p className="other-info">Recharge</p>
+                  <p className="other-info">Balance</p>
                 </div>
   </div>
       </div>

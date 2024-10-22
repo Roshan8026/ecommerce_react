@@ -1,8 +1,13 @@
+.product-main{
+  background-color: rgb(239, 238, 243);
+}
+
 .product-details {
     display: flex;
     flex-direction: column;
     border: 1px solid #fff;
     border-radius: 5px;
+    background-color: white;
     overflow: hidden;
     margin: 5px;
   }
@@ -32,5 +37,15 @@
   
   .description-card {
     padding: 10px;
+  }
+
+  .product-button {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background-color: white;
+    padding: 5px;
+    height: 75px;
   }
   

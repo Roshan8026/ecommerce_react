@@ -50,17 +50,17 @@ const WithDrawPassword = () => {
                                 <Form>
                                     <Row className="mb-3">
                                         <Col>
-                                            <Form.Control type="number" placeholder="Please Enter Mobile Number" className="form-control" />
+                                            <Form.Control type="email" placeholder="Email" className="form-control" />
                                         </Col>
                                     </Row>
                                     <Row className="mb-3">
                                         <Col>
-                                            <Form.Control type="password" placeholder="Please input Password " className="form-control" />
+                                            <Form.Control type="password" placeholder="Password " className="form-control" />
                                         </Col>
                                     </Row>
                                     <Row className="mb-3">
                                         <Col>
-                                            <Form.Control type="password" placeholder="Please enter password again" className="form-control" />
+                                            <Form.Control type="password" placeholder="Re-enter Password" className="form-control" />
                                         </Col>
                                     </Row>
                                     <Row className="mb-3">

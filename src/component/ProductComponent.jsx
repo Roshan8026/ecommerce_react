@@ -1,133 +1,162 @@
-import React, { useState } from 'react';
-import './ProductComponent.css'; // Import your CSS file for styling
-import { Button ,Badge} from 'react-bootstrap';
+import React, { useState,useEffect } from "react";
+import "./ProductComponent.css"; // Import your CSS file for styling
+import { Button, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
-// Sample data for products and categories
-const productsData = [
-  { id: 1, name: "Product 1", category: "Category A", price: "$10", image: "https://via.placeholder.com/150" },
-  { id: 2, name: "Product 2", category: "Category A", price: "$15", image: "https://via.placeholder.com/150" },
-  { id: 3, name: "Product 3", category: "Category B", price: "$20", image: "https://via.placeholder.com/150" },
-  { id: 4, name: "Product 4", category: "Category B", price: "$25", image: "https://via.placeholder.com/150" },
-  { id: 5, name: "Product 5", category: "Category C", price: "$30", image: "https://via.placeholder.com/150" },
-  { id: 6, name: "Product 6", category: "Category D", price: "$35", image: "https://via.placeholder.com/150" }, 
-  { id: 7, name: "Product 7", category: "Category D", price: "$40", image: "https://via.placeholder.com/150" }, 
-  { id: 8, name: "Product 8", category: "Category E", price: "$45", image: "https://via.placeholder.com/150" }, 
-  { id: 9, name: "Product 9", category: "Category E", price: "$50", image: "https://via.placeholder.com/150" },
-];
-
-const categories = Array.from(new Set(productsData.map(product => product.category)));
+import axios from "axios";
 
 const Product = ({ product }) => {
+  
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
-    navigate(`/product-details/${product.id}`, { state: { product } });
+    console.log("Product ", product)
+    navigate(`/product-details/${product.id}`);
+    console.log("product image -> ", `http://localhost:3001/${product.img_url}`);
   };
 
   return (
-
-
-<>
-<div className="container d-none">
-  <div className="row ">
-    <div className="col-md-4">
-      <div className="card border p-4 rounded">
-        <div className='d-flex justify-content-between p-4 bg-primary text-white text-center rounded'>
-        <div class="rechare">
-          <p class="user-id">0</p>
-          <p class="other-info">Recharge</p>
+    <>
+      {/* <div className="container d-none">
+        <div className="row ">
+          <div className="col-md-4">
+            <div className="card border p-4 rounded">
+              <div className="d-flex justify-content-between p-4 bg-primary text-white text-center rounded">
+                <div class="rechare">
+                  <p class="user-id">0</p>
+                  <p class="other-info">Recharge</p>
+                </div>
+                <div class="rechare">
+                  <p class="user-id">0</p>
+                  <p class="other-info">Recharge</p>
+                </div>
+                <div class="rechare">
+                  <p class="user-id">0</p>
+                  <p class="other-info">Recharge</p>
+                </div>
+              </div>
+              <div className="content-product d-flex justify-content-between px-2 pt-3">
+                <h6 className="text-muted">Title</h6>
+                <p>aaaa</p>
+              </div>
+              <div className="content-product d-flex justify-content-between px-2">
+                <h6 className="text-muted">Price</h6>
+                <p>1000 Rs.</p>
+              </div>
+              <div className="content-product d-flex justify-content-between px-2">
+                <h6 className="text-muted">Coupon</h6>
+                <p>Select Coupon</p>
+              </div>
+              <div className="content-product d-flex justify-content-between px-2">
+                <h6 className="text-muted">Final Price</h6>
+                <p>1000 Rs.</p>
+              </div>
+              <div className="d-flex justify-content-between px-2">
+                <button className="btn btn-light bg-light border px-5">
+                  Clear
+                </button>
+                <button className="btn btn-primary bg-primary border px-5">
+                  Confirm
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="rechare">
-          <p class="user-id">0</p>
-          <p class="other-info">Recharge</p>
+        </div>
+      </div> */}
+      <div className="product-card">
+        <div className="product-image">
+          <img
+            className="products-image"
+            src={`http://localhost:3001/${product.img_url}`}
+            alt={product.title}
+          />
+        </div>
+        
+        <div className="product-details">
+          <div className="row">
+            <div className="col product-name">
+              <h3>{product.title}</h3>
+            </div>
+            <div className="col-auto">
+              <Badge bg="success">New</Badge>
+            </div>
           </div>
-          <div class="rechare">
-          <p class="user-id">0</p>
-          <p class="other-info">Recharge</p>
-          </div>
+          <p>
+            Daily Income: <b>{product.daily_income}</b>
+          </p>
+          <p>
+            Validity Period: <b>{product.validity_period}</b>
+          </p>
+          <p>
+            Total Income: <b>{product.total_revenue}</b>
+          </p>
+          <p>
+            Price: <b>{product.price}</b>
+          </p>
+          <Button
+            variant="danger"
+            type="button"
+            className="btn-details"
+            onClick={handleDetailsClick}
+          >
+            Details
+          </Button>
         </div>
-        <div className='content-product d-flex justify-content-between px-2 pt-3'>
-          <h6 className='text-muted'>Title</h6>
-          <p>aaaa</p>
-        </div>
-        <div className='content-product d-flex justify-content-between px-2'>
-          <h6 className='text-muted'>Price</h6>
-          <p>1000 Rs.</p>
-        </div>
-        <div className='content-product d-flex justify-content-between px-2'>
-          <h6 className='text-muted'>Coupon</h6>
-          <p>Select Coupon</p>
-        </div>
-        <div className='content-product d-flex justify-content-between px-2'>
-          <h6 className='text-muted'>Final Price</h6>
-          <p>1000 Rs.</p>
-        </div>
-      <div className='d-flex justify-content-between px-2'>
-        <button className='btn btn-light bg-light border px-5'>Clear</button>
-        <button className='btn btn-primary bg-primary border px-5'>Confirm</button>
-
       </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-    <div className="product-card ">
-      <div className="product-image">
-        <img className="products-image" src={product.image} alt={product.name} />
-      </div>
-      <div className="product-details">
-      <div className="row">
-        <div className="col product-name">
-          <h3>{product.name}</h3>
-        </div>
-        <div className="col-auto">
-          <Badge bg="success">New</Badge>
-        </div>
-      </div>     
-         <p>Category: <b>{product.category}</b></p>
-        <p>Category: <b>{product.category}</b></p>
-        <p>Category: <b>{product.category}</b></p>
-        <p>Price: <b>{product.price}</b></p>
-        <Button
-          variant="danger"
-          type="button"
-          className="btn-details"
-          onClick={handleDetailsClick}
-        >
-          Details
-        </Button>
-      </div>
-
-    </div>
     </>
   );
 };
 
 const ProductComponent = () => {
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]); // Initially select the first category
+  const [selectedCategory, setSelectedCategory] = useState(); // Initially select the first category
+  const [productsData, setProductsData] = useState([]);
+  const [categories, setCategories] = useState([]);
+  
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/all_title_products`);
+        console.log(response.data);
+        setProductsData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+  
+    fetchProducts();
+  }, []);
+  
+  useEffect( () => {
+    const category = Array.from(
+      new Set(productsData.map((product) => product.product_title_id))
+    );
+    // console.log("first11",category)
+    setCategories(category)
+    setSelectedCategory(category[0])
+  }, [productsData]);
 
-  const filteredProducts = productsData.filter(product => product.category === selectedCategory);
+  
+  const filteredProducts = productsData.filter(
+    (product) => product.product_title_id === selectedCategory
+  );
 
   return (
     <div className="product-container">
       <div className="category-list">
         <div className="category-row">
-          {categories.map(category => (
-            <div
-              key={category}
-              className={`category ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </div>
-          ))}
+        {categories.map((category) => (
+  <div
+    key={category}
+    className={`category ${selectedCategory === category ? "active" : ""}`}
+    onClick={() => setSelectedCategory(category)}
+  >
+    {["Category E", "Category A", " Category B", "Category C", "Category D"][category] || "Category E"}
+  </div>
+))}
+
         </div>
       </div>
       <div className="product-list">
-        {filteredProducts.map(product => (
+        {filteredProducts.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </div>
