@@ -1,17 +1,19 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./ProductComponent.css"; // Import your CSS file for styling
 import { Button, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Product = ({ product }) => {
-  
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
-    console.log("Product ", product)
+    console.log("Product ", product);
     navigate(`/product-details/${product.id}`);
-    console.log("product image -> ", `http://localhost:3001/${product.img_url}`);
+    console.log(
+      "product image -> ",
+      `http://localhost:3001/${product.img_url}`
+    );
   };
 
   return (
@@ -68,9 +70,10 @@ const Product = ({ product }) => {
             className="products-image"
             src={`http://localhost:3001/${product.img_url}`}
             alt={product.title}
+            style={{ width: "75%" }}
           />
         </div>
-        
+
         <div className="product-details">
           <div className="row">
             <div className="col product-name">
@@ -110,31 +113,32 @@ const ProductComponent = () => {
   const [selectedCategory, setSelectedCategory] = useState(); // Initially select the first category
   const [productsData, setProductsData] = useState([]);
   const [categories, setCategories] = useState([]);
-  
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/all_title_products`);
+        const response = await axios.get(
+          `http://localhost:3001/api/all_title_products`
+        );
         console.log(response.data);
         setProductsData(response.data.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-  
+
     fetchProducts();
   }, []);
-  
-  useEffect( () => {
+
+  useEffect(() => {
     const category = Array.from(
       new Set(productsData.map((product) => product.product_title_id))
     );
     // console.log("first11",category)
-    setCategories(category)
-    setSelectedCategory(category[0])
+    setCategories(category);
+    setSelectedCategory(category[0]);
   }, [productsData]);
 
-  
   const filteredProducts = productsData.filter(
     (product) => product.product_title_id === selectedCategory
   );
@@ -143,16 +147,23 @@ const ProductComponent = () => {
     <div className="product-container">
       <div className="category-list">
         <div className="category-row">
-        {categories.map((category) => (
-  <div
-    key={category}
-    className={`category ${selectedCategory === category ? "active" : ""}`}
-    onClick={() => setSelectedCategory(category)}
-  >
-    {["Category E", "Category A", " Category B", "Category C", "Category D"][category] || "Category E"}
-  </div>
-))}
-
+          {categories.map((category) => (
+            <div
+              key={category}
+              className={`category ${
+                selectedCategory === category ? "active" : ""
+              }`}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {[
+                "Category E",
+                "Category A",
+                " Category B",
+                "Category C",
+                "Category D",
+              ][category] || "Category E"}
+            </div>
+          ))}
         </div>
       </div>
       <div className="product-list">

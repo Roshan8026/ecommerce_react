@@ -186,7 +186,7 @@ const ProductDetails = () => {
                   <p className="other-info">Balance</p>
                 </div>
                 <div className="rechare">
-                  <p className="user-id">{product.id}</p>
+                  <p className="user-id">0</p>
                   <p className="other-info">Voucher</p>
                 </div>
               </div>

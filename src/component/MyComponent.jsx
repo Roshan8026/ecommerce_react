@@ -24,7 +24,7 @@ import {
 import { FcBusinessman } from "react-icons/fc";
 
 let username = JSON.parse(localStorage.getItem('user'));
-username = username.user.email.split("@",1);
+username = username?.user?.email?.split("@",1);
 
 
 // new tab code //////////////////////////////////////////////////////////////////

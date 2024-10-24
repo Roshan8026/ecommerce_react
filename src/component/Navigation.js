@@ -15,7 +15,7 @@ const tabs = [{
     icon: faShoppingCart,
     label: "Product"
 },  {
-    route: "/team",
+    route: "/teams",
     icon: faUsers,
     label: "Team"
 }, {

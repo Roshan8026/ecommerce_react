@@ -24,6 +24,8 @@ import {
   setIsLoggedIn,
 } from "./features/authenticationSlice.js";
 import { useDispatch } from "react-redux"; // Correct for dispatching Redux actions
+import Teams from './component/Teams.jsx';
+
 
 const App = () => {
   let isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
@@ -70,6 +72,7 @@ const App = () => {
             <Route path="/transaction" element={<Transaction />} />
             <Route path="/orders" element={<Order />} />
             <Route path="/withdraw" element={<WithDraw />} />
+            <Route path='/teams' element={<Teams />} />
           </Routes>
         </>
       ) : (
