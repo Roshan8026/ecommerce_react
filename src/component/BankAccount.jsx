@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import './Home.css';
 import { Navbar, Card, Form, Button } from 'react-bootstrap';
 import './SignupPage.css';
@@ -20,6 +20,14 @@ const BankAccount = () => {
 
     const [errors, setErrors] = useState({});
     let token = localStorage.getItem("token");
+
+   useEffect(() => {
+    (async function () {
+    // body of the function
+    await FetchBankAccount();
+    }());
+
+   },[])
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -93,6 +101,38 @@ const BankAccount = () => {
         }
     };
 
+      const FetchBankAccount = async () => {
+        // Simulate API call for FetchBankAccount
+        try {
+         const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/bank-detail`, {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": `${token}` // Replace `yourToken` with the actual token variable
+            },
+        });
+        console.log('FetchBankAccount response', response)
+        // Check if the response was successful before parsing
+        if (response.ok) {
+            const data = await response.json(); // Parse JSON response
+            console.log('FetchBankAccount response data:', data);
+             setFormData({
+                cardholderName: data.data.cardholder_name,
+                bankName: data.data.bank_name,
+                bankAccount: data.data.bank_account,
+                ifscCode: data.data.ifsc_code,
+                mobileNumber: data.data.bank_mobile_number,
+            })
+        } else {
+            console.error('FetchBankAccount failed with status:', response.status);
+        }
+        return response;
+        } catch (error) {
+        console.error("FetchBankAccount failed", error);
+        toast.error("FetchBankAccount failed. Please try again.");
+        return { status: 500 }; // Return a failure status
+        }
+    };
     const handleSubmit = async (e) => {
         try {
         e.preventDefault();
