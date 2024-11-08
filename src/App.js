@@ -25,6 +25,8 @@ import {
 } from "./features/authenticationSlice.js";
 import { useDispatch } from "react-redux"; // Correct for dispatching Redux actions
 import Teams from './component/Teams.jsx';
+import AllUserList from './component/AllUserList.jsx';
+import AllWithdrawList from './component/AllWithdrawList.jsx';
 
 
 const App = () => {
@@ -73,6 +75,8 @@ const App = () => {
             <Route path="/orders" element={<Order />} />
             <Route path="/withdraw" element={<WithDraw />} />
             <Route path='/teams' element={<Teams />} />
+            <Route path='/user-list' element={<AllUserList />} />
+            <Route path='/withdraw-list' element={<AllWithdrawList />} />
           </Routes>
         </>
       ) : (

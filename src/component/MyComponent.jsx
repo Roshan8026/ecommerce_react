@@ -64,10 +64,30 @@ const data = [
     formType: "typeG",
     text: "WithDraw password",
   },
+  {
+    id: 8,
+    icon: FaKey,
+    isOpen: false,
+    formType: "typeh",
+    text: "All withdraw List",
+  },
+  {
+    id: 9,
+    icon: FaUser,
+    isOpen: false,
+    formType: "typei",
+    text: "All User List",
+  },
+  {
+    id: 10,
+    icon: FaUser,
+    isOpen: false,
+    formType: "typej",
+    text: "Ask Questions",
+  },
 ];
 
 const MyComponent = () => {
-
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -78,6 +98,10 @@ const MyComponent = () => {
     { id: 5, title: "My Bank Account", isOpen: false, formType: "typeE" },
     { id: 6, title: "Change Password", isOpen: false, formType: "typeF" },
     { id: 7, title: "WithDraw password", isOpen: false, formType: "typeG" },
+    { id: 8, title: "All User List", isOpen: false, formType: "typeh" },
+    { id: 9, title: "All withdraw List", isOpen: false, formType: "typei" },
+    { id: 10, title: "query", isOpen: false, formType: "typej" },
+
   ]);
   const [showModal, setShowModal] = useState(false); // State to handle modal visibility
   const handleShow = () => setShowModal(true); // Show modal
@@ -160,6 +184,15 @@ const MyComponent = () => {
         break;
       case "typeG":
         navigate("/withdraw-password");
+        break;
+      case "typei":
+        navigate("/user-list");
+        break;
+      case "typeh":
+        navigate("/withdraw-list");
+        break;
+      case "typej":
+        window.location.href = "https://wa.me/8053818026"
         break;
       default:
         return null;

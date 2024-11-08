@@ -19,28 +19,28 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 
-const Teams = () => {
+const AllUserList = () => {
    const navigate = useNavigate();
     let token = localStorage.getItem("token");
     let user = localStorage.getItem("user");
-    const [teamList, setTeamList] = useState([]);
+    const [userList, setUserList] = useState([]);
 
 
     useEffect(() => {
       const team = async() => {
           let userDetail = JSON.parse(user);
           console.log('userDetail',userDetail.user.email)
-          await FetchTeamUser(userDetail.user.email)
+          await FetchAllUserList(userDetail.user.email)
       }
+
       team();
+
     },[])
 
-      const FetchTeamUser = async (email) => {
+      const FetchAllUserList = async (email) => {
         // Simulate API call for FetchTeamUser
         try {
-              const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/team_user`);
-              url.searchParams.append('email', email); // Add the email as a query parameter
-
+              const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/user-list`);
               const response = await fetch(url, {
                   method: "GET",
                   headers: {
@@ -55,7 +55,7 @@ const Teams = () => {
 
               const data = await response.json(); // Assuming the response is in JSON format
               console.log('FetchTeamUser response', data);
-              setTeamList([data.data])
+              setUserList(data.data)
               return data;
           } catch (error) {
               console.error("FetchTeamUser failed", error);
@@ -64,13 +64,13 @@ const Teams = () => {
           }
       };
 
-      console.log('teamList',teamList);
+      console.log('userList',userList);
 
   return (
     <div>
       <Navbar bg="primary" variant="dark" className="fixed-top">
         <Navbar.Brand href="#" className="px-4">
-          Teams
+          All User List
         </Navbar.Brand>
       </Navbar>
       <section className="mt-5 pt-5">
@@ -86,10 +86,10 @@ const Teams = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {Array.isArray(teamList) && teamList.length > 0 ? (
-                        teamList.map((item, index) => (
+                      {Array.isArray(userList) && userList.length > 0 ? (
+                        userList.map((item, index) => (
                           <tr key={index}>
-                            <td>{index + 1}</td>
+                            <td>{index + 1 +'#'}</td>
                             <td>{item.id}</td>
                             <td>{item.email}</td>
                           </tr>
@@ -101,68 +101,6 @@ const Teams = () => {
                       )}
                     </tbody>
                   </Table>
-                {/* <Tab eventKey="profile" title="Recharge">
-                  <Table striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td colSpan={2}>Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Tab>
-                <Tab eventKey="longer-tab" title="withdraw">
-                  <Table striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td colSpan={2}>Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Tab> */}
             </div>
           </div>
         </div>
@@ -171,4 +109,4 @@ const Teams = () => {
   );
 };
 
-export default Teams;
+export default AllUserList;
