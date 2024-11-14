@@ -30,52 +30,52 @@ const ProductDetails = () => {
   const handleClose = () => setShowModal(false); // Close modal
 
   const checkoutHandler = async (amount) => {
-    try {
-      const { data: { key } } = await axios.get("http://localhost:3001/api/getkey");
-      const { data: { order } } = await axios.post("http://localhost:3001/api/checkout", { amount });
+    // try {
+    //   const { data: { key } } = await axios.get("http://localhost:3001/api/getkey");
+    //   const { data: { order } } = await axios.post("http://localhost:3001/api/checkout", { amount });
 
-      const options = {
-        key,
-        amount: order.amount,
-        currency: "INR",
-        name: "Product Payment",
-        description: "Payment for the product",
-        image: "https://avatars.githubusercontent.com/u/25058652?v=4",
-        order_id: order.id,
-        callback_url: "http://localhost:3001/api/paymentverification",
-        prefill: {
-          name: "John Doe",
-          email: "johndoe@example.com",
-          contact: "9876543210"
-        },
-        notes: {
-          address: "Company Corporate Office"
-        },
-        theme: {
-          color: "#121212"
-        },
-        method: {
-          netbanking: true,
-          card: true,
-          upi: true,
-          wallet: true,
-          emi: true
-        }
-      };
+    //   const options = {
+    //     key,
+    //     amount: order.amount,
+    //     currency: "INR",
+    //     name: "Product Payment",
+    //     description: "Payment for the product",
+    //     image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+    //     order_id: order.id,
+    //     callback_url: "http://localhost:3001/api/paymentverification",
+    //     prefill: {
+    //       name: "John Doe",
+    //       email: "johndoe@example.com",
+    //       contact: "9876543210"
+    //     },
+    //     notes: {
+    //       address: "Company Corporate Office"
+    //     },
+    //     theme: {
+    //       color: "#121212"
+    //     },
+    //     method: {
+    //       netbanking: true,
+    //       card: true,
+    //       upi: true,
+    //       wallet: true,
+    //       emi: true
+    //     }
+    //   };
 
-      const razor = new window.Razorpay(options);
-      razor.open();
+    //   const razor = new window.Razorpay(options);
+    //   razor.open();
 
-      razor.on("payment.success", function (response) {
-        console.log("Payment Success:", response);
-      });
+    //   razor.on("payment.success", function (response) {
+    //     console.log("Payment Success:", response);
+    //   });
 
-      razor.on("payment.error", function (response) {
-        console.error("Payment Failed:", response.error);
-      });
-    } catch (error) {
-      console.error("Error in checkoutHandler:", error);
-    }
+    //   razor.on("payment.error", function (response) {
+    //     console.error("Payment Failed:", response.error);
+    //   });
+    // } catch (error) {
+    //   console.error("Error in checkoutHandler:", error);
+    // }
   };
 
   if (!product) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaUser, FaAngleRight } from "react-icons/fa";
 import "./MyComponent.css";
 import { json, useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import {
   Navbar,
   Container,
   Row,
-  Col,
+  Form,
   Card,
   Modal,
   Button,
@@ -25,7 +25,7 @@ import axios from "axios";
 let username = JSON.parse(localStorage.getItem("user"));
 username = username?.user?.email?.split("@", 1);
 let token = localStorage.getItem("token");
-
+let user = JSON.parse(localStorage.getItem("user"));
 // new tab code //////////////////////////////////////////////////////////////////
 const data = [
   { id: 1, icon: FaUser, isOpen: false, formType: "typeA", text: "My Order" },
@@ -107,37 +107,86 @@ const MyComponent = () => {
   const handleShow = () => setShowModal(true); // Show modal
   const handleClose = () => setShowModal(false); // Close modal
 
+  const [show, setShow] = useState(false);
+  const [rupees, setRupees] = useState('');
+  const handleShows = () => setShow(true);
+  const handleCloses = () => setShow(false);
+  const handleRupeeChange = (e) => setRupees(e.target.value);
+  let token = localStorage.getItem("token");
+  const [myDetail, setMyDetail] = useState();
+    
+    useEffect(() => {
+      const MyDetail = async() => {
+          console.log('userDetail',user.user.id)
+          await FetchMyDetail(user.user.id)
+      }
+
+      MyDetail();
+  },[])
+  
+  
+      const FetchMyDetail = async (id) => {
+        // Simulate API call for FetchTeamUser
+        try {
+              const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/my_details/${id}`);
+              const response = await fetch(url, {
+                  method: "GET",
+                  headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": `${token}`, // Ensure the token is prefixed with "Bearer"
+                  },
+              });
+
+              if (!response.ok) {
+                  throw new Error(`Error: ${response.status}`);
+              }
+
+              const data = await response.json(); // Assuming the response is in JSON format
+              console.log('FetchMyDetail response', data);
+              setMyDetail(data)
+              return data;
+          } catch (error) {
+              console.error("FetchMyDetail failed", error);
+              return { status: 500 }; // Return a failure status
+          }
+      };
+
+
   const checkoutHandler = async (amount) => {
     try {
       const { data: { key } } = await axios.get("http://localhost:3001/api/getkey");
       const { data: { order } } = await axios.post("http://localhost:3001/api/checkout", { amount });
-
+      console.log('user',user);
+      console.log('username', username);
       const options = {
         key,
         amount: order.amount,
         currency: "INR",
-        name: "Product Payment",
-        description: "Payment for the product",
+        name: username[0],
+        description: "Add money to wallet",
         image: "https://avatars.githubusercontent.com/u/25058652?v=4",
         order_id: order.id,
         callback_url: "http://localhost:3001/api/paymentverification",
         prefill: {
-          name: "John Doe",
-          email: "johndoe@example.com",
-          contact: "9876543210"
+          name: username[0],
+          email: user?.user?.email,
+          contact: "90000000"
         },
         notes: {
-          address: "Company Corporate Office"
+            address: "Company Corporate Office",
+           userId: user?.user?.id, // Pass the user ID here
+           amount: amount , // Optional: pass the amount as well
+           email: user?.user?.email
         },
         theme: {
           color: "#121212"
         },
         method: {
-          netbanking: true,
+          // netbanking: true,
           card: true,
           upi: true,
-          wallet: true,
-          emi: true
+          // wallet: true,
+          // emi: true
         }
       };
 
@@ -205,6 +254,16 @@ const MyComponent = () => {
     navigate("/login");
   };
 
+  const filteredData = data.filter((item) => {
+    console.log('return false',user.user.role)
+  // If user.role is 'client', filter out items with id 8 and 9
+  if (user?.user?.role === "client" && (item.id === 8 || item.id === 9)) {
+    return false;
+  }
+  return true;
+});
+
+
   return (
     <>
       <div className="my-component ">
@@ -227,11 +286,11 @@ const MyComponent = () => {
             </div>
             <div className="d-flex justify-content-around mt-3 text-center">
               <div>
-                <p className="user-id">0</p>
+                <p className="user-id">{myDetail?.recharge ?? 0}</p>
                 <p className="other-info">Recharge</p>
               </div>
               <div>
-                <p className="user-id">0</p>
+                <p className="user-id">{myDetail?.balance ?? 0}</p>
                 <p className="other-info">Balance</p>
               </div>
             </div>
@@ -239,35 +298,35 @@ const MyComponent = () => {
 
           <div className="button-row-container">
             <div className="text-container">
-              <p className="user-id">0</p>
+              <p className="user-id">{myDetail?.total_income ?? 0}</p>
               <p className="other-info">Total Income</p>
             </div>
 
             <div className="vr"></div>
             <div className="text-container">
-              <p className="user-id">0</p>
+              <p className="user-id">{myDetail?.total_recharge ?? 0}</p>
               <p className="other-info"> Total Recharge</p>
             </div>
             <div className="vr"></div>
             <div className="text-container">
-              <p className="user-id">0</p>
+              <p className="user-id">{myDetail?.total_asset ?? 0}</p>
               <p className="other-info">Total Assets</p>
             </div>
           </div>
 
           <div className="button-row-container">
             <div className="text-container">
-              <p className="user-id">0</p>
+              <p className="user-id">{myDetail?.total_withdraw ?? 0}</p>
               <p className="other-info">Total Withdraw</p>
             </div>
             <div className="vr"></div>
             <div className="text-container">
-              <p className="user-id">0</p>
+              <p className="user-id">{myDetail?.todays_income ?? 0}</p>
               <p className="other-info">Today's Income</p>
             </div>
             <div className="vr "></div>
             <div className="text-container">
-              <p className="user-id">0</p>
+              <p className="user-id">{myDetail?.team_income ?? 0}</p>
               <p className="other-info">Team Income</p>
             </div>
           </div>
@@ -278,7 +337,7 @@ const MyComponent = () => {
             variant="primary"
             type="submit"
             className="btn-signup"
-            onClick={() => checkoutHandler(200)}
+            onClick={() => handleShows()}
           >
             Recharge
           </Button>
@@ -293,7 +352,7 @@ const MyComponent = () => {
         </div>
         {/* new tab */}
         <div className="mb-5 pb-5">
-          {data.map((item, index) => (
+          {filteredData.map((item, index) => (
             <div
               key={index}
               className="d-flex justify-content-between px-4 mt-4"
@@ -318,7 +377,7 @@ const MyComponent = () => {
             </button>
           </div>
         </div>
-        {/* d-none not use */}
+         {/* d-none not use */}
         <div className="accordion mb-5 pb-5 d-none">
           {accordionItems.map((item) => (
             <div className="accordion-item" key={item.id}>
@@ -344,7 +403,7 @@ const MyComponent = () => {
           </div>
         </div>
       </div>
-        {/* <Modal show={showModal} onHide={handleClose}>
+ {/* <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Product Details</Modal.Title>
           </Modal.Header>
@@ -396,6 +455,33 @@ const MyComponent = () => {
             </Button>
           </Modal.Footer>
         </Modal> */}
+          {/* Modal */}
+        <Modal show={show} onHide={handleCloses} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Enter Amount in Rupees</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group controlId="formRupeeAmount">
+                <Form.Label>Amount (INR)</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter amount in rupees"
+                  value={rupees}
+                  onChange={handleRupeeChange}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloses}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => checkoutHandler(rupees)}>
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
     </>
   );
 };

@@ -16,6 +16,45 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
 const Transaction = () => {
+  let token = localStorage.getItem("token");
+  let user = JSON.parse(localStorage.getItem("user"));
+  const [transactionList, setTransactionList] = useState([]);
+
+    useEffect(() => {
+      const transaction = async() => {
+          console.log('userDetail',user.user.id)
+          await FetchAllTransactionList(user.user.id)
+      }
+
+      transaction();
+  },[])
+
+  const FetchAllTransactionList = async (id) => {
+        // Simulate API call for FetchTeamUser
+        try {
+              const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/all_transaction/${id}`);
+              const response = await fetch(url, {
+                  method: "GET",
+                  headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": `${token}`, // Ensure the token is prefixed with "Bearer"
+                  },
+              });
+
+              if (!response.ok) {
+                  throw new Error(`Error: ${response.status}`);
+              }
+
+              const data = await response.json(); // Assuming the response is in JSON format
+              console.log('FetchAllTransactionList response', data);
+              setTransactionList(data)
+              return data;
+          } catch (error) {
+              console.error("FetchAllTransactionList failed", error);
+              return { status: 500 }; // Return a failure status
+          }
+      };
+
   return (
     <div>
       <Navbar bg="primary" variant="dark" className="fixed-top">
@@ -68,30 +107,31 @@ const Transaction = () => {
                   <Table striped bordered hover>
                     <thead>
                       <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Order Id</th>
+                        <th>Payment Id</th>
+                        <th>Amount</th>
+                        <th>Date</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td colSpan={2}>Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                      {Array.isArray(transactionList) && transactionList.length > 0 ? (
+                        transactionList.map((item, index) => (
+                          <tr key={index}>
+                            <td>{item.id}</td>
+                            <td>{item.email}</td>
+                            <td>{item.razorpay_order_id}</td>
+                            <td>{item.razorpay_payment_id}</td>
+                            <td>{item.amount}</td>
+                             <td>{formatDateTime(item.createdAt)}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="3">No Transaction found.</td>
+                        </tr>
+                      )}
                     </tbody>
                   </Table>
                 </Tab>
@@ -167,5 +207,10 @@ const Transaction = () => {
     </div>
   );
 };
+
+function formatDateTime(timestamp) {
+  const date = new Date(timestamp);
+  return date.toLocaleString(); // Formats based on the user's locale
+}
 
 export default Transaction;
