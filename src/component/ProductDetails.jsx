@@ -6,11 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import Font
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"; // Import the arrow left icon
 import { Button } from "react-bootstrap";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null); // Initialize product state as null
   const [showModal, setShowModal] = useState(false); // State to handle modal visibility
+  const [myDetail, setMyDetail] = useState();
+  let token = localStorage.getItem("token");
+  let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -24,58 +29,52 @@ const ProductDetails = () => {
     };
 
     fetchProductDetails();
+
+     const MyDetail = async() => {
+          console.log('userDetail',user.user.id)
+          await FetchMyDetail(user.user.id)
+      }
+
+      MyDetail();
+
   }, [id]); // The effect depends on the product ID
 
   const handleShow = () => setShowModal(true); // Show modal
   const handleClose = () => setShowModal(false); // Close modal
 
-  const checkoutHandler = async (amount) => {
-    // try {
-    //   const { data: { key } } = await axios.get("http://localhost:3001/api/getkey");
-    //   const { data: { order } } = await axios.post("http://localhost:3001/api/checkout", { amount });
+  const BuyProducts = async (amount) => {
+    console.log('amount', amount);
+    if(amount < myDetail.balance ) {
+        toast.success(" successful!");
+    } else {
+      toast.error("Insufficient balance. Please recharge");
+    }
+  };
 
-    //   const options = {
-    //     key,
-    //     amount: order.amount,
-    //     currency: "INR",
-    //     name: "Product Payment",
-    //     description: "Payment for the product",
-    //     image: "https://avatars.githubusercontent.com/u/25058652?v=4",
-    //     order_id: order.id,
-    //     callback_url: "http://localhost:3001/api/paymentverification",
-    //     prefill: {
-    //       name: "John Doe",
-    //       email: "johndoe@example.com",
-    //       contact: "9876543210"
-    //     },
-    //     notes: {
-    //       address: "Company Corporate Office"
-    //     },
-    //     theme: {
-    //       color: "#121212"
-    //     },
-    //     method: {
-    //       netbanking: true,
-    //       card: true,
-    //       upi: true,
-    //       wallet: true,
-    //       emi: true
-    //     }
-    //   };
+  const FetchMyDetail = async (id) => {
+  // Simulate API call for FetchTeamUser
+    try {
+          const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/my_details/${id}`);
+          const response = await fetch(url, {
+              method: "GET",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `${token}`, // Ensure the token is prefixed with "Bearer"
+              },
+          });
 
-    //   const razor = new window.Razorpay(options);
-    //   razor.open();
+          if (!response.ok) {
+              throw new Error(`Error: ${response.status}`);
+          }
 
-    //   razor.on("payment.success", function (response) {
-    //     console.log("Payment Success:", response);
-    //   });
-
-    //   razor.on("payment.error", function (response) {
-    //     console.error("Payment Failed:", response.error);
-    //   });
-    // } catch (error) {
-    //   console.error("Error in checkoutHandler:", error);
-    // }
+          const data = await response.json(); // Assuming the response is in JSON format
+          console.log('FetchMyDetail response', data);
+          setMyDetail(data)
+          return data;
+      } catch (error) {
+          console.error("FetchMyDetail failed", error);
+          return { status: 500 }; // Return a failure status
+      }
   };
 
   if (!product) {
@@ -84,6 +83,7 @@ const ProductDetails = () => {
 
   return (
     <div className="product-main">
+       <ToastContainer />
       <Navbar bg="dark" variant="dark" expand="md">
         <Container>
           <Link to="/products" className="navbar-brand">
@@ -123,7 +123,7 @@ const ProductDetails = () => {
 
         <div className="info-card product-details">
           <div className="info-row">
-            <div className="info-label">✅{product.title} 1-1000rs; Daily Income {product.daily_income}Rs, Total Income {product.total_revenue}Rs, Contract Period {product.validity_period} days</div><br/><br/>
+            <div className="info-label">✅{product.title}  {product.price}Rs; Daily Income {product.daily_income}Rs, Total Income {product.total_revenue}Rs, Contract Period {product.validity_period} days</div><br/><br/>
           </div>  
           <div className="info-row">   
             <div className="info-label">Purchase limit: {product.purchase_limit}</div><br/><br/>
@@ -140,21 +140,21 @@ const ProductDetails = () => {
           <div className="info-row">  
             <div className="info-label">1️⃣ (%) A-level team bonus Rs</div><br/><br/>
           </div>
-          <div className="info-row">  
+          {/* <div className="info-row">  
             <div className="info-label">2️⃣ (%) B-level team bonus Rs</div><br/><br/>
           </div>
           <div className="info-row">  
             <div className="info-label">3️⃣ (%) C-level team bonus Rs</div><br/><br/><br/><br/>
-          </div>
+          </div> */}
           <div className="info-row">  
             <div className="info-label">1️⃣ (%) A-level team commision: Rs, Total commision: Rs </div><br/><br/>
           </div>
-          <div className="info-row">  
+          {/* <div className="info-row">  
             <div className="info-label">2️⃣ (%) B-level team commision: Rs, Total commision: Rs </div><br/><br/>
           </div>
           <div className="info-row">  
             <div className="info-label">3️⃣ (%) C-level team commision: Rs, Total commision: Rs </div><br/><br/>
-          </div>
+          </div> */}
 
         </div>
         <div className="product-button">
@@ -178,11 +178,11 @@ const ProductDetails = () => {
             <div className="card border p-4 rounded">
               <div className="d-flex justify-content-between p-4 bg-primary text-white text-center rounded">
                 <div className="rechare">
-                  <p className="user-id">{product.id}</p>
+                  <p className="user-id">{myDetail.recharge}</p>
                   <p className="other-info">Recharge</p>
                 </div>
                 <div className="rechare">
-                  <p className="user-id">{product.id}</p>
+                  <p className="user-id">{myDetail.balance}</p>
                   <p className="other-info">Balance</p>
                 </div>
                 <div className="rechare">
@@ -209,7 +209,7 @@ const ProductDetails = () => {
               <div className="d-flex justify-content-between px-2">
                 <button className="btn btn-light bg-light border px-5">Clear</button>
                 <button className="btn btn-primary bg-primary border px-5"
-                  onClick={() => checkoutHandler(product.price)} // Use the product price for checkout
+                  onClick={() => BuyProducts(product.price)} // Use the product price for checkout
                 >
                   Confirm
                 </button>
