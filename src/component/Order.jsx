@@ -14,8 +14,59 @@ import "./Transaction.css"; // Import your CSS file
 import Table from "react-bootstrap/Table";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
 
 const Order = () => {
+  let token = localStorage.getItem("token");
+    let user = localStorage.getItem("user");
+    const [orderList, setOrderList] = useState([]);
+    let username = JSON.parse(localStorage.getItem("user"));
+    username = username?.user?.email?.split("@", 1);
+
+    useEffect(() => {
+      const OrderList = async() => {
+          await FetchOrderList()
+      }
+
+      OrderList();
+    },[])
+
+      const FetchOrderList = async (id) => {
+        // Simulate API call for FetchOrderList
+        try {
+              const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/all_order`);
+              const response = await fetch(url, {
+                  method: "GET",
+                  headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": `${token}`, // Ensure the token is prefixed with "Bearer"
+                  },
+              });
+
+              if (!response.ok) {
+                  throw new Error(`Error: ${response.status}`);
+              }
+
+              const data = await response.json(); // Assuming the response is in JSON format
+              console.log('FetchOrderList response', data);
+              setOrderList(data.data)
+              return data;
+          } catch (error) {
+              console.error("FetchOrderList failed", error);
+              toast.error("FetchOrderList failed. Please try again.");
+              return { status: 500 }; // Return a failure status
+          }
+      };  
+    
+      console.log('orderList', orderList);
+
+      const handleWithdraw = (id) => {
+        console.log('handleWithdraw', id);
+      } 
+
   return (
     <div>
       <Navbar bg="primary" variant="dark" className="fixed-top">
@@ -27,130 +78,46 @@ const Order = () => {
         <div className="continer px-4">
           <div className="row">
             <div className="col-md-12">
-              <Tabs
-                defaultActiveKey="profile"
-                id="fill-tab-example"
-                className="mb-5 "
-                fill
-              >
-                <Tab eventKey="home" title="My Order">
                   <Table striped bordered>
                     <thead>
                       <tr>
                         <th>Sr No</th>
                         <th>Product Name</th>
+                        <th>image</th>
                         <th>Daily Amount</th>
                         <th>Validity (In Days)</th>
                         <th>Withdraw Amount</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>
-                          <Button variant="danger">Withdraw</Button>
-                        </td>
-                      </tr>
+                      {Array.isArray(orderList) && orderList.length > 0 ? (
+                        orderList.map((item, index) => (
+                          <tr key={index}>
+                            <td>{item.id}</td>
+                            <td>{item.product.title}</td>
+                            <td> <img
+                                className="products"
+                                src={`http://localhost:3001/${item.product.img_url}`}
+                                alt={item.product.title}
+                                style={{ width: "10%", height: "5%" }}
+                              /></td>
+                            <td>{item.product.daily_income} Rs</td>
+                            <td>{item.product.validity_period}</td>
+                            {item.status == "Not Completed" ? <td> <Button style={{ backgroundColor: "red"}}  onClick={() => handleWithdraw(item.id)}>Withdraw</Button></td> : <td> <Button style={{ backgroundColor: "green" }}>Completed</Button></td>}
+                            
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="3">No Order found.</td>
+                        </tr>
+                      )}
                     </tbody>
                   </Table>
-                </Tab>
-                {/* <Tab eventKey="profile" title="Recharge">
-      <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-      </Tab> */}
-                {/* <Tab eventKey="longer-tab" title="withdraw">
-      <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-      </Tab>
-     */}
-              </Tabs>
             </div>
           </div>
         </div>
       </section>
-
-      <Container className="login-container d-none">
-        <Row className="justify-content-center">
-          <Col xs={12} md={6}>
-            <Card className="reset-password-card">
-              <Card.Body>
-                <div className="button-row-container">
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    className="btn-signup"
-                  >
-                    My Order
-                  </Button>
-                  {/* <Button variant="primary" type="submit" className="btn-signup">
-                                        Recharge
-                                    </Button>
-                                    <Button variant="primary" type="submit" className="btn-signup">
-                                        Withdraw
-                                    </Button> */}
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
     </div>
   );
 };

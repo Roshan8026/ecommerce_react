@@ -115,7 +115,7 @@ const AllWithdrawList = () => {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan="3">No team members found.</td>
+                          <td colSpan="3">No withdraw found.</td>
                         </tr>
                       )}
                     </tbody>

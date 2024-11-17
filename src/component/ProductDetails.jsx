@@ -8,9 +8,11 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { json, useNavigate } from "react-router-dom";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null); // Initialize product state as null
   const [showModal, setShowModal] = useState(false); // State to handle modal visibility
   const [myDetail, setMyDetail] = useState();
@@ -42,10 +44,54 @@ const ProductDetails = () => {
   const handleShow = () => setShowModal(true); // Show modal
   const handleClose = () => setShowModal(false); // Close modal
 
+   const CreateOrder = async () => {
+      // Simulate API call for CreateOrder
+      try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/create_order`, {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+          "Authorization": `${token}` // Replace `yourToken` with the actual token variable
+          },
+          body: JSON.stringify({ 
+              product_Id: id,
+          }),
+      });
+      console.log('CreateOrder response', response)
+      // Parse the response body as JSON
+      const data = await response.json();
+
+        // Return both the status and the response body
+        return {
+          status: response.status,
+          data,
+        };
+      } catch (error) {
+       console.error("CreateOrder failed", error);
+       toast.error("CreateOrder failed. Please try again.");
+        return {
+          status: 500,
+          data: { error: "Internal Server Error" },
+        };
+      }
+  };
+
   const BuyProducts = async (amount) => {
     console.log('amount', amount);
     if(amount < myDetail.balance ) {
-        toast.success(" successful!");
+        const OrderResponse = await CreateOrder();
+
+        console.log('OrderResponse', OrderResponse)
+        console.log('OrderResponse.data', OrderResponse.data)
+        if (OrderResponse.status === 200 || OrderResponse.status === 201) {
+            toast.success('Order created successfully');
+            setTimeout(() => {
+                navigate('/my-components');
+            },2000)
+        } else {
+             toast.error(OrderResponse.data.error || "Something went wrong");
+        }
+        
     } else {
       toast.error("Insufficient balance. Please recharge");
     }
@@ -178,11 +224,11 @@ const ProductDetails = () => {
             <div className="card border p-4 rounded">
               <div className="d-flex justify-content-between p-4 bg-primary text-white text-center rounded">
                 <div className="rechare">
-                  <p className="user-id">{myDetail.recharge}</p>
+                  <p className="user-id">{myDetail?.recharge}</p>
                   <p className="other-info">Recharge</p>
                 </div>
                 <div className="rechare">
-                  <p className="user-id">{myDetail.balance}</p>
+                  <p className="user-id">{myDetail?.balance}</p>
                   <p className="other-info">Balance</p>
                 </div>
                 <div className="rechare">

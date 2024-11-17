@@ -89,11 +89,19 @@ const WithDraw = () => {
                 }),
             });
             console.log('WithDrawBalance response', response)
-            return response;
+            const data = await response.json();
+            // Return both the status and the response body
+            return {
+            status: response.status,
+            data,
+            };
             } catch (error) {
             console.error("WithDrawBalance failed", error);
             toast.error("WithDrawBalance failed. Please try again.");
-            return { status: 500 }; // Return a failure status
+           return {
+                status: 500,
+                data: { error: "Internal Server Error" },
+                };
             }
         };
 
