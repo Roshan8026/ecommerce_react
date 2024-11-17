@@ -23,24 +23,26 @@ const AllWithdrawList = () => {
    const navigate = useNavigate();
     let token = localStorage.getItem("token");
     let user = localStorage.getItem("user");
-    const [userList, setUserList] = useState([]);
+    const [withdrawList, setWithdrawList] = useState([]);
+    let username = JSON.parse(localStorage.getItem("user"));
+    username = username?.user?.email?.split("@", 1);
 
 
     useEffect(() => {
-      const team = async() => {
+      const withdrawList = async() => {
           let userDetail = JSON.parse(user);
           console.log('userDetail',userDetail.user.email)
-          await FetchAllUserList(userDetail.user.email)
+          await FetchWithdrawList(userDetail.user.id)
       }
 
-      team();
+      withdrawList();
 
     },[])
 
-      const FetchAllUserList = async (email) => {
-        // Simulate API call for FetchTeamUser
+      const FetchWithdrawList = async (id) => {
+        // Simulate API call for FetchWithdrawList
         try {
-              const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/user-list`);
+              const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/all_withdraw/${id}`);
               const response = await fetch(url, {
                   method: "GET",
                   headers: {
@@ -54,17 +56,17 @@ const AllWithdrawList = () => {
               }
 
               const data = await response.json(); // Assuming the response is in JSON format
-              console.log('FetchTeamUser response', data);
-              setUserList(data.data)
+              console.log('FetchWithdrawList response', data);
+              setWithdrawList(data)
               return data;
           } catch (error) {
-              console.error("FetchTeamUser failed", error);
-              toast.error("FetchTeamUser failed. Please try again.");
+              console.error("FetchWithdrawList failed", error);
+              toast.error("FetchWithdrawList failed. Please try again.");
               return { status: 500 }; // Return a failure status
           }
       };
 
-      console.log('userList',userList);
+      console.log('withdrawList',withdrawList);
 
       const handleApproveWithdraw = (id) => {
         console.log('approve', id)
@@ -88,20 +90,27 @@ const AllWithdrawList = () => {
                <Table striped bordered hover>
                     <thead>
                       <tr>
-                        <th>#</th>
                         <th>id</th>
+                        <th>UserID</th>
                         <th>Username</th>
+                        <th>Amount</th>
+                        <th>Transaction Fees</th>
+                        <th>Created Date</th>
                         <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {Array.isArray(userList) && userList.length > 0 ? (
-                        userList.map((item, index) => (
+                      {Array.isArray(withdrawList) && withdrawList.length > 0 ? (
+                        withdrawList.map((item, index) => (
                           <tr key={index}>
-                            <td>{index + 1 +'#'}</td>
                             <td>{item.id}</td>
-                            <td>{item.email}</td>
-                            <td><Button onClick={() => handleApproveWithdraw(item.id)}>Approve</Button> / <Button onClick={() => handleRejectWithdraw(item.id)}>Reject</Button></td>
+                            <td>{item.user_id}</td>
+                            <td>{username}</td>
+                            <td>{item.amount} Rs</td>
+                            <td>{item.transaction_fees} Rs</td>
+                            <td>{formatDateTime(item.createdAt)}</td>
+                            {item.status == "pending" ? <td><Button style={{ backgroundColor: "blue" }}  onClick={() => handleApproveWithdraw(item.id)}>Approve</Button> / <Button style={{ backgroundColor: "red"}}  onClick={() => handleRejectWithdraw(item.id)}>Reject</Button></td> : item.status == "approved" ?  <td> <Button style={{ backgroundColor: "green" }}>Approved</Button></td> : item.status == "rejected" ?  <td> <Button style={{ backgroundColor: "red" }}>Rejected</Button></td>: "null"}
+                            
                           </tr>
                         ))
                       ) : (
@@ -118,5 +127,10 @@ const AllWithdrawList = () => {
     </div>
   );
 };
+
+function formatDateTime(timestamp) {
+  const date = new Date(timestamp);
+  return date.toLocaleString(); // Formats based on the user's locale
+}
 
 export default AllWithdrawList;

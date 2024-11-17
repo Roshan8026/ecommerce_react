@@ -2,6 +2,10 @@ import React , { useState, useEffect } from 'react';
 import { Navbar, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import './SignupPage.css'; // Import your CSS file
 import { NavLink } from 'react-router-dom'; // Import NavLink from react-router-dom
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { json, useNavigate } from "react-router-dom";
+
 
 const WithDraw = () => {
     let token = localStorage.getItem("token");
@@ -9,6 +13,7 @@ const WithDraw = () => {
     const [myDetail, setMyDetail] = useState();
     const [amount, setAmount] = useState(null);
     const [password, setPassword] = useState(""); // State for password
+    const navigate = useNavigate();
 
       // State to manage the countdown timer
       const [countdown, setCountdown] = useState(0);
