@@ -22,11 +22,20 @@ const Transaction = () => {
   let user = JSON.parse(localStorage.getItem("user"));
   const [transactionList, setTransactionList] = useState([]);
   const [withdrawList, setWithdrawList] = useState([]);
+  const [allMyOrderList, setAllMyOrderList] = useState([]);
   let username = JSON.parse(localStorage.getItem("user"));
   username = username?.user?.email?.split("@", 1);
 
 
     useEffect(() => {
+
+      // Allmyorder list
+        const Allmyorder = async() => {
+          await FetchAllMyOrderList(user.user.id)
+        }
+
+      Allmyorder();
+
       // transaction list
       const transaction = async() => {
           console.log('userDetail',user.user.id)
@@ -97,6 +106,33 @@ const Transaction = () => {
         }
     };
 
+    const FetchAllMyOrderList = async (id) => {
+      // Simulate API call for FetchAllMyOrderList
+      try {
+            const url = new URL(`${process.env.REACT_APP_API_BASE_URL}/api/get_all_my_order`);
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `${token}`, // Ensure the token is prefixed with "Bearer"
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
+            const data = await response.json(); // Assuming the response is in JSON format
+            console.log('FetchAllMyOrderList response', data);
+            setAllMyOrderList(data)
+            return data;
+        } catch (error) {
+            console.error("FetchAllMyOrderList failed", error);
+            toast.error("FetchAllMyOrderList failed. Please try again.");
+            return { status: 500 }; // Return a failure status
+        }
+    };
+
   return (
     <div>
       <Navbar bg="primary" variant="dark" className="fixed-top">
@@ -118,30 +154,27 @@ const Transaction = () => {
                   <Table striped bordered hover>
                     <thead>
                       <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
+                        <th>id</th>
+                        <th>Product Name</th>
+                        <th>Daily Income</th>
+                        <th>Date</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td colSpan={2}>Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                      {Array.isArray(allMyOrderList) && allMyOrderList.length > 0 ? (
+                        allMyOrderList.map((item, index) => (
+                          <tr key={index}>
+                            <td>{item.id}</td>
+                            <td>{item.product.title}</td>
+                            <td>{item.daily_income}</td>
+                             <td>{formatDateTime(item.createdAt)}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="3">No Record found.</td>
+                        </tr>
+                      )}
                     </tbody>
                   </Table>
                 </Tab>

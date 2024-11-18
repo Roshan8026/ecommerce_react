@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const Order = () => {
+  const navigate = useNavigate();
   let token = localStorage.getItem("token");
     let user = localStorage.getItem("user");
     const [orderList, setOrderList] = useState([]);
@@ -63,8 +64,55 @@ const Order = () => {
     
       console.log('orderList', orderList);
 
-      const handleWithdraw = (id) => {
-        console.log('handleWithdraw', id);
+       const CreateMyOrder = async (product_Id, order_id) => {
+        // Simulate API call for CreateMyOrder
+        try {
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/order_daily_withdraw`, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": `${token}` // Replace `yourToken` with the actual token variable
+            },
+            body: JSON.stringify({ 
+                product_Id: product_Id,
+                order_id: order_id,
+            }),
+        });
+        console.log('CreateMyOrder response', response)
+        const data = await response.json();
+        // Return both the status and the response body
+        return {
+        status: response.status,
+          data,
+          };
+        } catch (error) {
+        console.error("CreateMyOrder failed", error);
+        toast.error("CreateMyOrder failed. Please try again.");
+        return {
+            status: 500,
+            data: { error: "Internal Server Error" },
+            };
+        }
+    };
+
+
+      const handleWithdraw = async (order_id, product_Id) => {
+        try {
+          console.log('handleWithdraw', {order_id, product_Id});
+           const CreateMyOrderResponse = await CreateMyOrder(product_Id, order_id);
+            if (CreateMyOrderResponse.status === 201) {
+                toast.success('withdraw initiate is successfully');
+                setTimeout(() => {
+                    navigate('/my-components');
+                },2000)
+            } else {
+                toast.error("Something went wrong");
+            }
+         } catch (error) {
+            console.error("handleWithdraw", error);
+            toast.error("handleWithdraw. Please try again.");
+            return { status: 500 }; // Return a failure status
+        }
       } 
 
   return (
@@ -75,6 +123,7 @@ const Order = () => {
         </Navbar.Brand>
       </Navbar>
       <section className="mt-5 pt-5">
+               <ToastContainer />
         <div className="continer px-4">
           <div className="row">
             <div className="col-md-12">
@@ -103,7 +152,7 @@ const Order = () => {
                               /></td>
                             <td>{item.product.daily_income} Rs</td>
                             <td>{item.product.validity_period}</td>
-                            {item.status == "Not Completed" ? <td> <Button style={{ backgroundColor: "red"}}  onClick={() => handleWithdraw(item.id)}>Withdraw</Button></td> : <td> <Button style={{ backgroundColor: "green" }}>Completed</Button></td>}
+                            {item.status == "Not Completed" ? <td> <Button style={{ backgroundColor: "red"}}  onClick={() => handleWithdraw(item.id, item.product.id)}>Withdraw</Button></td> : <td> <Button style={{ backgroundColor: "green" }}>Completed</Button></td>}
                             
                           </tr>
                         ))
